@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var typewriterEl = document.getElementById('typewriter');
     var roles = [
         'Vice Principal',
-        'HOD – Information Technology',
+        'Associate Professor',
         'Researcher',
         'Mentor & Educator'
     ];
