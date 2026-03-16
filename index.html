@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. M. Sathya | Academic Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>(function(){if(typeof emailjs!=='undefined')emailjs.init({publicKey:"YOUR_PUBLIC_KEY"});})()</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --ivory:#F5F0E8;--ivory-dark:#EDE7D9;--ivory-darker:#DDD5C5;
+  --green:#1A3A2A;--green-mid:#2D5A3F;--green-light:#4A7C5F;
+  --gold:#B8962E;--gold-light:#D4AF50;
+  --text-dark:#1C1C1C;--text-mid:#4A4A4A;--text-soft:#7A7060;
+  --white:#FFFFFF;--radius:4px;--radius-md:10px;
+  --s1:0 2px 12px rgba(26,58,42,0.08);--s2:0 8px 32px rgba(26,58,42,0.14);--s3:0 20px 60px rgba(26,58,42,0.18);
+  --tr:all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+body{background:var(--ivory);color:var(--text-dark);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.7}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.15}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{max-width:1160px;margin:0 auto;padding:0 2.5rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.f1{animation:fadeUp .7s ease both .1s}.f2{animation:fadeUp .7s ease both .25s}
+.f3{animation:fadeUp .7s ease both .4s}.f4{animation:fadeUp .7s ease both .55s}
+.f5{animation:fadeUp .7s ease both .7s}
+.section{padding:8rem 0 7rem 0}
+/* Fix navbar overlap on anchor links */
+section[id]{scroll-margin-top:130px}
+.section-slim{padding:4rem 0}
+.section-header{display:flex;align-items:baseline;gap:1.2rem;margin-bottom:3.5rem;padding-top:.5rem}
+.section-num{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold);font-style:italic;opacity:.8}
+.section-title{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--green);position:relative}
+.section-title::after{content:'';display:block;width:40px;height:2px;background:var(--gold);margin-top:.5rem}
+/* NAV */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.4rem 0;transition:var(--tr);background:rgba(245,240,232,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent}
+.navbar.scrolled{background:rgba(245,240,232,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:.9rem 0;border-bottom:1px solid var(--ivory-darker);box-shadow:var(--s1)}
+.nav-container{max-width:1160px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:baseline;gap:.3rem}
+.logo-dr{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--gold)}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--green);letter-spacing:.06em}
+.nav-links{display:flex;list-style:none;gap:1.8rem;align-items:center}
+.nav-link{font-size:.75rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:var(--text-mid);position:relative;transition:var(--tr)}
+.nav-link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s ease}
+.nav-link:hover{color:var(--green)}.nav-link:hover::after{width:100%}
+.menu-btn{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.menu-btn span{display:block;width:24px;height:2px;background:var(--green);transition:var(--tr)}
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:none;transition:var(--tr);border-radius:var(--radius)}
+.btn-primary{background:var(--green);color:var(--ivory)}.btn-primary:hover{background:var(--green-mid);transform:translateY(-2px);box-shadow:var(--s2)}
+.btn-ghost{background:transparent;color:var(--green);border:1.5px solid var(--green)}.btn-ghost:hover{background:var(--green);color:var(--ivory);transform:translateY(-2px)}
+.btn-full{width:100%;justify-content:center}
+.btn-collapse{display:inline-flex;align-items:center;gap:.5rem;font-size:.78rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-soft);background:none;border:1px solid var(--ivory-darker);padding:.6rem 1.3rem;border-radius:var(--radius);cursor:pointer;transition:var(--tr);margin-top:2rem}
+.btn-collapse:hover{color:var(--green);border-color:var(--green)}
+.btn-collapse i{transition:transform .3s ease;font-size:.72rem}.btn-collapse.open i{transform:rotate(180deg)}
+/* HERO */
+.hero{min-height:100vh;padding:9rem 2.5rem 4rem;background:var(--ivory);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.hero::before{content:'';position:absolute;top:-120px;right:-180px;width:650px;height:650px;background:radial-gradient(circle,rgba(184,150,46,.07) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-120px;width:500px;height:500px;background:radial-gradient(circle,rgba(26,58,42,.05) 0%,transparent 70%);pointer-events:none}
+.hero-layout{max-width:1160px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:center}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.eyebrow-line{display:block;width:32px;height:1px;background:var(--gold)}
+.hero-name{font-size:clamp(2.8rem,5vw,5.2rem);line-height:1.05;margin-bottom:1.8rem;color:var(--green)}
+.hero-name em{font-style:italic;font-weight:300;color:var(--text-mid);display:block}
+.hero-name strong{font-weight:700;color:var(--green);display:block}
+.hero-role-wrapper{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;min-height:2rem}
+.role-prefix{font-size:.88rem;color:var(--text-soft);font-style:italic;font-family:'Cormorant Garamond',serif;white-space:nowrap}
+.role-text{font-weight:500;color:var(--green);font-size:1.1rem}
+.cursor{color:var(--gold);animation:blink 1s infinite;font-weight:300}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-spec{font-size:.88rem;color:var(--text-soft);margin-bottom:2.5rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.portrait-frame{display:flex;flex-direction:column;align-items:flex-end;gap:1.5rem}
+.portrait-inner{width:300px;height:360px;background:var(--green-mid);border-radius:12px;position:relative;overflow:hidden;box-shadow:var(--s3)}
+.portrait-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s ease}
+.portrait-inner:hover .portrait-photo{transform:scale(1.04)}
+.portrait-deco{position:absolute;border-radius:50%;pointer-events:none}
+.dec-1{width:220px;height:220px;border:1px solid rgba(184,150,46,.18);top:-50px;right:-50px}
+.dec-2{width:160px;height:160px;border:1px solid rgba(184,150,46,.12);bottom:-30px;left:-30px}
+.portrait-badge{display:flex;align-items:center;gap:.9rem;background:var(--white);border-radius:10px;padding:.9rem 1.3rem;box-shadow:var(--s2);border-left:3px solid var(--gold);max-width:300px}
+.portrait-badge i{color:var(--gold);font-size:1.2rem;flex-shrink:0}
+.portrait-badge span{display:block;font-size:.82rem;font-weight:600;color:var(--green);line-height:1.3}
+.portrait-badge small{font-size:.75rem;color:var(--text-soft)}
+.hero-stats{max-width:1160px;margin:3.5rem auto 0;width:100%;display:flex;align-items:center;background:var(--white);border-radius:12px;box-shadow:var(--s2);overflow:hidden}
+.stat-pill{flex:1;padding:1.8rem 2rem;display:flex;flex-direction:column;align-items:center;text-align:center}
+.stat-num-wrap{display:flex;align-items:baseline;gap:2px}
+.stat-number{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--green);line-height:1}
+.stat-plus{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);font-weight:600}
+.stat-label{font-size:.75rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem}
+.stat-divider{width:1px;height:48px;background:var(--ivory-darker);flex-shrink:0}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft);animation:floatCue 2.5s ease-in-out infinite}
+@keyframes floatCue{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+/* ABOUT */
+#about{background:var(--ivory-dark)}
+.about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+.big-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2vw,1.8rem);font-style:italic;font-weight:300;color:var(--green);line-height:1.5;border-left:2px solid var(--gold);padding-left:1.6rem;margin-bottom:2.2rem}
+.about-highlights{display:flex;flex-direction:column;gap:1.1rem}
+.highlight-item{display:flex;align-items:flex-start;gap:.9rem;font-size:.88rem;color:var(--text-mid)}
+.highlight-item i{color:var(--gold);margin-top:3px;flex-shrink:0}
+.about-lead{font-size:1.1rem;font-family:'Cormorant Garamond',serif;color:var(--green);margin-bottom:1.1rem;line-height:1.55}
+.about-text-col p{color:var(--text-mid);margin-bottom:1.1rem;font-size:.93rem}
+.about-domains{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+.about-domains span{padding:.35rem .9rem;border:1px solid var(--ivory-darker);border-radius:100px;font-size:.78rem;color:var(--text-soft);background:var(--ivory);transition:var(--tr);cursor:default}
+.about-domains span:hover{border-color:var(--green);color:var(--green)}
+/* EXPERIENCE */
+#experience{background:var(--ivory)}
+.timeline{position:relative;padding-left:1.5rem}
+.timeline::before{content:'';position:absolute;left:6px;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--gold),rgba(184,150,46,.1))}
+.tl-item{position:relative;margin-bottom:2.2rem;padding-left:2rem}
+.tl-item:last-child{margin-bottom:0}
+.tl-dot{position:absolute;left:-1.5rem;top:6px;width:13px;height:13px;background:var(--ivory);border:2px solid var(--gold);border-radius:50%;transition:var(--tr)}
+.tl-item:hover .tl-dot{background:var(--gold);transform:scale(1.2)}
+.tl-date{font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.05em;display:block;margin-bottom:.35rem;text-transform:uppercase}
+.tl-item h3{font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:.2rem}
+.tl-item h4{font-size:.87rem;font-weight:400;color:var(--text-soft);font-family:'DM Sans',sans-serif;margin-bottom:.6rem}
+.tl-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tl-tags span{font-size:.7rem;padding:.18rem .6rem;background:rgba(26,58,42,.06);color:var(--green-mid);border-radius:100px;font-weight:500}
+/* EDUCATION */
+#education{background:var(--ivory-dark)}
+.edu-grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:1.8rem;align-items:start}
+.edu-card{background:var(--white);border-radius:var(--radius-md);padding:1.8rem;box-shadow:var(--s1);transition:var(--tr);border-top:3px solid transparent;display:flex;flex-direction:column;gap:.8rem}
+.edu-card:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+.edu-card--feat{border-top-color:var(--gold);background:linear-gradient(155deg,var(--green) 0%,var(--green-mid) 100%)}
+.edu-card--feat .edu-icon i{color:var(--gold-light)}
+.edu-card--feat h3{color:#ffffff!important}
+.edu-card--feat .edu-year,.edu-card--feat h4,.edu-card--feat p{color:rgba(245,240,232,.65)}
+.edu-icon i{font-size:1.7rem;color:var(--gold)}
+.edu-year{font-size:.75rem;color:var(--text-soft);font-weight:500;text-transform:uppercase;letter-spacing:.06em;display:block}
+.edu-card h3{font-size:1.05rem;font-weight:700;color:var(--green);line-height:1.3}
+.edu-card h4{font-size:.82rem;font-weight:400;color:var(--text-soft);font-family:'DM Sans',sans-serif}
+.edu-card p{font-size:.82rem;color:var(--text-soft)}
+.edu-badge{display:inline-block;font-size:.7rem;padding:.25rem .75rem;background:rgba(184,150,46,.12);color:var(--gold);border:1px solid rgba(184,150,46,.3);border-radius:100px;font-weight:500}
+.edu-badge--sec{background:rgba(26,58,42,.06);color:var(--green);border-color:rgba(26,58,42,.15)}
+/* PATENTS */
+#patents{background:var(--ivory)}
+.patent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.patent-card{background:var(--white);border-radius:var(--radius-md);padding:1.6rem;border:1px solid var(--ivory-darker);transition:var(--tr);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:.7rem}
+.patent-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .35s ease}
+.patent-card:hover{transform:translateY(-3px);box-shadow:var(--s2);border-color:transparent}
+.patent-card:hover::before{height:100%}
+.patent-num{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:rgba(184,150,46,.18);line-height:1}
+.patent-card h3{font-size:.88rem;font-weight:600;color:var(--green);line-height:1.45;font-family:'DM Sans',sans-serif;flex:1}
+.patent-id{font-family:monospace;font-size:.75rem;color:var(--text-soft)}
+.patent-date{display:inline-block;font-size:.7rem;font-weight:500;padding:.18rem .65rem;background:rgba(26,58,42,.06);color:var(--green);border-radius:100px;align-self:flex-start}
+/* PAPERS */
+#papers{background:var(--ivory-dark)}
+.paper-list{display:flex;flex-direction:column;gap:1.1rem}
+.paper-item{background:var(--white);border-radius:var(--radius-md);padding:1.4rem 1.7rem;border-left:3px solid var(--gold);box-shadow:var(--s1);transition:var(--tr)}
+.paper-item:hover{transform:translateX(4px);box-shadow:var(--s2)}
+.paper-year{font-size:.72rem;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:.3rem}
+.paper-item h3{font-size:.9rem;font-weight:600;color:var(--green);line-height:1.45;margin-bottom:.35rem}
+.paper-journal{font-size:.78rem;color:var(--text-soft);font-style:italic}
+/* CONFERENCES */
+#conferences{background:var(--ivory)}
+.conf-list{display:flex;flex-direction:column;gap:1rem}
+.conf-item{background:var(--white);border-radius:var(--radius-md);padding:1.2rem 1.5rem;border-left:3px solid var(--green-light);box-shadow:var(--s1);transition:var(--tr)}
+.conf-item:hover{transform:translateX(4px);box-shadow:var(--s2)}
+.conf-item h3{font-size:.88rem;font-weight:600;color:var(--green);margin-bottom:.25rem;line-height:1.4}
+.conf-item p{font-size:.78rem;color:var(--text-soft)}
+/* BOOKS */
+#books{background:var(--ivory-dark)}
+.books-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.8rem}
+.book-card{background:var(--white);border-radius:var(--radius-md);padding:1.8rem;box-shadow:var(--s1);border-top:3px solid var(--green);transition:var(--tr);display:flex;gap:1.2rem;align-items:flex-start}
+.book-card:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+.book-icon{width:46px;height:46px;background:rgba(26,58,42,.06);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.book-icon i{color:var(--green);font-size:1.2rem}
+.book-card h3{font-size:.95rem;font-weight:700;color:var(--green);margin-bottom:.3rem}
+.book-card p{font-size:.8rem;color:var(--text-soft);margin-bottom:.25rem}
+.book-isbn{font-family:monospace;font-size:.73rem;color:var(--text-soft)}
+/* AWARDS */
+#awards{background:var(--green)}
+#awards .section-title{color:var(--ivory)}#awards .section-title::after{background:var(--gold)}#awards .section-num{color:var(--gold-light)}
+.awards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+.award-item{display:flex;gap:1.3rem;align-items:flex-start;padding:1.8rem;background:rgba(255,255,255,.05);border-radius:var(--radius-md);border:1px solid rgba(255,255,255,.08);transition:var(--tr)}
+.award-item:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.award-icon{width:46px;height:46px;background:rgba(184,150,46,.15);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(184,150,46,.3)}
+.award-icon i{font-size:1.2rem;color:var(--gold-light)}
+.award-item h3{font-size:1rem;font-weight:700;color:var(--ivory);margin-bottom:.35rem}
+.award-item p{font-size:.82rem;color:rgba(245,240,232,.58);margin-bottom:.3rem}
+.award-item span{font-size:.75rem;color:var(--gold-light);font-weight:500}
+/* ACTIVITIES */
+#activities{background:var(--ivory-dark)}
+.activity-list{display:flex;flex-direction:column;gap:.9rem}
+.activity-item{background:var(--white);border-radius:var(--radius-md);padding:1.2rem 1.5rem;border-left:3px solid var(--gold);box-shadow:var(--s1);transition:var(--tr);font-size:.87rem;color:var(--text-mid);line-height:1.55}
+.activity-item:hover{transform:translateX(4px);box-shadow:var(--s2)}
+.activity-item strong{color:var(--green);display:block;font-size:.88rem;margin-bottom:.15rem}
+/* WORKSHOPS */
+#workshops{background:var(--ivory)}
+.workshop-list{display:flex;flex-direction:column;gap:.85rem}
+.workshop-item{background:var(--white);border-radius:var(--radius-md);padding:1rem 1.4rem;border-left:3px solid rgba(184,150,46,.4);box-shadow:var(--s1);font-size:.84rem;color:var(--text-mid);line-height:1.5;transition:var(--tr)}
+.workshop-item:hover{border-left-color:var(--gold);box-shadow:var(--s2)}
+/* SUBJECTS */
+#subjects{background:var(--ivory-dark)}
+.subjects-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.subject-chip{background:var(--white);border:1px solid var(--ivory-darker);border-radius:var(--radius-md);padding:1rem 1.2rem;font-size:.85rem;font-weight:500;color:var(--green);text-align:center;transition:var(--tr)}
+.subject-chip:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:var(--s1)}
+/* SKILLS */
+#skills{background:var(--ivory)}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem}
+.skill-group-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:1.1rem;font-weight:600}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.55rem}
+.skill-tags span{padding:.45rem 1rem;border-radius:100px;border:1px solid var(--ivory-darker);background:var(--white);font-size:.8rem;color:var(--text-mid);transition:var(--tr);cursor:default}
+.skill-tags span:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+/* COMMUNITY */
+#community{background:var(--ivory-dark)}
+.community-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+.community-col-title{font-size:1.1rem;font-family:'DM Sans',sans-serif;font-weight:600;color:var(--green);margin-bottom:1.8rem;display:flex;align-items:center;gap:.6rem}
+.community-col-title i{color:var(--gold)}
+.membership-list{list-style:none;display:flex;flex-direction:column}
+.membership-list li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--ivory-darker)}
+.membership-list li:last-child{border-bottom:none}
+.mem-org{font-weight:600;color:var(--green);font-size:.88rem}
+.mem-since{font-size:.75rem;color:var(--text-soft);text-align:right}
+.volunteer-cards{display:flex;flex-direction:column;gap:1.4rem}
+.vol-card{display:flex;gap:1rem;align-items:flex-start}
+.vol-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:5px}
+.vol-card h4{font-size:.9rem;font-weight:600;color:var(--green);margin-bottom:.2rem;font-family:'DM Sans',sans-serif}
+.vol-card p{font-size:.82rem;color:var(--text-mid);margin-bottom:.2rem}
+.vol-card em{font-style:normal;font-size:.75rem;color:var(--text-soft)}
+/* CONTACT */
+#contact{background:var(--ivory)}
+.contact-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:5rem;align-items:start}
+.contact-lead{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-style:italic;color:var(--green);margin-bottom:2rem;line-height:1.5}
+.contact-details{display:flex;flex-direction:column;gap:1.2rem}
+.contact-detail-item{display:flex;align-items:center;gap:1.1rem;padding:1.1rem;background:var(--white);border-radius:var(--radius-md);border:1px solid var(--ivory-darker);transition:var(--tr);color:inherit}
+.contact-detail-item:hover{border-color:var(--gold);transform:translateX(4px);box-shadow:var(--s1)}
+.contact-icon{width:42px;height:42px;background:rgba(184,150,46,.1);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.95rem}
+.contact-detail-item span{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-soft);display:block;margin-bottom:.15rem}
+.contact-detail-item strong{font-size:.88rem;color:var(--green);display:block;font-weight:500}
+.field-group{margin-bottom:1.6rem}
+.field-group label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;font-weight:500;color:var(--text-soft);margin-bottom:.5rem}
+.field-group input,.field-group textarea{width:100%;padding:.85rem 1rem;background:var(--white);border:1px solid var(--ivory-darker);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--text-dark);transition:var(--tr);outline:none}
+.field-group input:focus,.field-group textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(26,58,42,.07)}
+.field-group textarea{resize:vertical;min-height:120px}
+#form-status{margin-top:1rem;font-size:.88rem;text-align:center;display:none;padding:.8rem 1rem;border-radius:var(--radius)}
+/* FOOTER */
+.footer{background:var(--green);padding:3rem 0 1.8rem}
+.footer-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6rem}
+.footer-brand h3{font-size:1.4rem;font-weight:700;color:var(--ivory);margin-bottom:.25rem}
+.footer-brand p{font-size:.82rem;color:rgba(245,240,232,.5)}
+.footer-nav{display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center}
+.footer-nav a{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(245,240,232,.5);transition:var(--tr)}
+.footer-nav a:hover{color:var(--gold-light)}
+.footer-copy{font-size:.75rem;color:rgba(245,240,232,.3);padding-top:1rem;border-top:1px solid rgba(255,255,255,.07);width:100%;text-align:center}
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-layout{grid-template-columns:1fr;gap:2.5rem}.hero-right{display:none}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .edu-grid{grid-template-columns:1fr 1fr}.edu-card--feat{grid-column:1/-1}
+  .awards-row{grid-template-columns:1fr}.patent-grid{grid-template-columns:repeat(2,1fr)}
+  .skills-grid{grid-template-columns:1fr 1fr}.community-grid{grid-template-columns:1fr;gap:2.5rem}
+  .contact-layout{grid-template-columns:1fr;gap:3rem}.books-grid{grid-template-columns:1fr}
+  .subjects-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(245,240,232,.98);flex-direction:column;padding:1.5rem 2rem;gap:1.2rem;border-bottom:1px solid var(--ivory-darker);box-shadow:var(--s2)}
+  .nav-links.open{display:flex}.menu-btn{display:flex}
+  .hero{padding:7rem 1.5rem 4rem}.hero-stats{flex-direction:column}.stat-divider{width:80%;height:1px}
+  .edu-grid,.patent-grid{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr}
+  .section{padding:4.5rem 0}.awards-row{gap:1.2rem}.subjects-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo"><span class="logo-dr">Dr.</span><span class="logo-name">MSS</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#education" class="nav-link">Education</a></li>
+      <li><a href="#patents" class="nav-link">Patents</a></li>
+      <li><a href="#papers" class="nav-link">Papers</a></li>
+      <li><a href="#activities" class="nav-link">Activities</a></li>
+      <li><a href="#workshops" class="nav-link">Workshops</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <button class="menu-btn" id="menu-btn"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<!-- Hero -->
+<section id="hero" class="hero">
+  <div class="hero-layout">
+    <div class="hero-left">
+      <div class="hero-eyebrow f1"><span class="eyebrow-line"></span><span>Academic Portfolio</span></div>
+      <h1 class="hero-name f2"><em>Dr. M. Sathya</em><strong>(She/Her)</strong></h1>
+      <div class="hero-role-wrapper f3"><span class="role-prefix">Currently —</span><span id="typewriter" class="role-text"></span><span class="cursor">|</span></div>
+      <p class="hero-spec f3">Networking &nbsp;·&nbsp; MANET &nbsp;·&nbsp; IoT &nbsp;·&nbsp; AI &amp; ML &nbsp;·&nbsp; Cloud Computing</p>
+      <div class="hero-cta f4">
+        <a href="#patents" class="btn btn-primary">View Research</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-right f2">
+      <div class="portrait-frame">
+        <div class="portrait-inner">
+          <img src="photo.png" alt="Dr. M. Sathya" class="portrait-photo">
+          <div class="portrait-deco dec-1"></div><div class="portrait-deco dec-2"></div>
+        </div>
+        <div class="portrait-badge">
+          <i class="fas fa-university"></i>
+          <div><span>Vice Principal</span><small>Associate Professor &nbsp;·&nbsp; NSCET, Theni</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats f5">
+    <div class="stat-pill stat-counter" data-target="13"><div class="stat-num-wrap"><span class="stat-number">13</span><span class="stat-plus">+</span></div><span class="stat-label">Years Experience</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-pill stat-counter" data-target="9"><div class="stat-num-wrap"><span class="stat-number">9</span><span class="stat-plus">+</span></div><span class="stat-label">Patents Published</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-pill stat-counter" data-target="21"><div class="stat-num-wrap"><span class="stat-number">21</span><span class="stat-plus">+</span></div><span class="stat-label">Papers Published</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-pill stat-counter" data-target="4"><div class="stat-num-wrap"><span class="stat-number">4</span><span class="stat-plus"></span></div><span class="stat-label">Books Published</span></div>
+  </div>
+  <a href="#about" class="scroll-cue"><span>Scroll</span><i class="fas fa-arrow-down"></i></a>
+</section>
+<!-- About -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">01</span><h2 class="section-title">About Me</h2></div>
+    <div class="about-grid">
+      <div class="about-quote-col">
+        <blockquote class="big-quote">"To undertake value-based teaching and associated responsibilities at the highest level, carrying students to the peak of their intelligence with an opportunity for continuous growth in research."</blockquote>
+        <div class="about-highlights">
+          <div class="highlight-item"><i class="fas fa-graduation-cap"></i><span>Ph.D — Information &amp; Communication Engineering, Anna University Chennai (2019)<br><em style="color:var(--text-soft);font-size:.82rem">Topic: Performance Analysis of Enhanced Directional Routing Protocol for MANET</em></span></div>
+          <div class="highlight-item"><i class="fas fa-language"></i><span>English, Tamil (fluent) · Hindi (read/write)</span></div>
+          <div class="highlight-item"><i class="fas fa-map-marker-alt"></i><span>Theni, Tamil Nadu, India</span></div>
+          <div class="highlight-item"><i class="fas fa-envelope"></i><span>msathya15&#64;gmail.com</span></div>
+        </div>
+      </div>
+      <div class="about-text-col">
+        <p class="about-lead">A dedicated Academician and Researcher with over <strong>13 years of experience</strong> in higher education.</p>
+        <p>Currently serving as Vice Principal &amp; Associate Professor at Nadar Saraswathi College of Engineering and Technology, Theni. Experienced as Chief Superintendent for VTU Examinations, and as Department NAAC &amp; ISO committee member.</p>
+        <p>Has guided more than <strong>80 student projects</strong> (UG &amp; PG). Serves as Faculty Advisor, Project Coordinator, External Examiner for Anna University affiliated colleges, and acts as a Mentor. Editor in Chief of CSE department magazine.</p>
+        <p>Also serves as Chairman for Anti-Ragging Committee, Anti-Sexual Harassment Committee, Grievance Redressal Cell, Student Counselling Cell and SC ST OBC Cell.</p>
+        <div class="about-domains">
+          <span>Networking Topologies</span><span>MANET</span><span>Routing Protocols</span>
+          <span>Approximation Algorithms</span><span>IoT</span><span>AI &amp; ML</span><span>Cloud Computing</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Experience -->
+<section id="experience" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">02</span><h2 class="section-title">Professional Experience</h2></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Apr 2023 – Present &nbsp;·&nbsp; 1 yr+</span><h3>Vice Principal &amp; Associate Professor</h3><h4>Nadar Saraswathi College of Engineering and Technology, Theni</h4><div class="tl-tags"><span>Leadership</span><span>Administration</span><span>NAAC</span></div></div>
+      <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Sep 2021 – Mar 2023 &nbsp;·&nbsp; 1 yr 5 mo</span><h3>Associate Professor &amp; Head</h3><h4>AMC Engineering College, Bangalore</h4></div>
+      <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Jul 2020 – Aug 2021 &nbsp;·&nbsp; 1 yr</span><h3>Principal-in-Charge</h3><h4>Islamiah Institute of Technology, Bangalore</h4></div>
+      <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Feb 2020 – Jun 2020 &nbsp;·&nbsp; 4 mo</span><h3>Associate Professor</h3><h4>Islamiah Institute of Technology, Bangalore</h4></div>
+      <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Nov 2017 – Nov 2019 &nbsp;·&nbsp; 2 yr 1 mo</span><h3>Assistant Professor</h3><h4>Dr. K.V. Subba Reddy College of Engineering for Women, Kurnool</h4></div>
+    </div>
+    <button id="show-more-exp" class="btn-collapse"><span>View Earlier Experience</span><i class="fas fa-chevron-down"></i></button>
+    <div id="more-exp" style="display:none;margin-top:1.5rem">
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Jun 2013 – Oct 2017 &nbsp;·&nbsp; 4 yr 4 mo</span><h3>Full-time Research Scholar</h3><h4>Info Institute of Engineering (Kumaraguru College of Technology), Coimbatore</h4></div>
+        <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Jan 2012 – May 2013 &nbsp;·&nbsp; 1 yr 5 mo</span><h3>Assistant Professor</h3><h4>Agni College of Technology</h4></div>
+        <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Nov 2010 – Jan 2012 &nbsp;·&nbsp; 1 yr 2 mo</span><h3>Full-time Research Scholar</h3><h4>Info Institute of Engineering</h4></div>
+        <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">May 2010 – Nov 2010 &nbsp;·&nbsp; 6 mo</span><h3>Assistant Professor</h3><h4>Agni College of Technology</h4></div>
+        <div class="tl-item"><div class="tl-dot"></div><span class="tl-date">Jul 2009 – Jan 2010 &nbsp;·&nbsp; 7 mo</span><h3>Lecturer</h3><h4>Info Institute of Engineering</h4></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Education -->
+<section id="education" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">03</span><h2 class="section-title">Education</h2></div>
+    <div class="edu-grid">
+      <div class="edu-card edu-card--feat">
+        <div class="edu-icon"><i class="fas fa-hat-wizard"></i></div>
+        <div><span class="edu-year">Completed 2019</span><h3>Ph.D — Information &amp; Communication Engineering</h3><h4>Anna University, Chennai</h4><p>Kumaraguru College of Technology, Coimbatore</p><span class="edu-badge">Full-time Research Scholar</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div><span class="edu-year">2007 – 2009</span><h3>M.Tech – Information Technology</h3><h4>Anna University, Coimbatore</h4><p>CGPA: 8.46</p><span class="edu-badge">First Class with Distinction</span></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fas fa-university"></i></div>
+        <div><span class="edu-year">2002 – 2006</span><h3>B.E. – Computer Science &amp; Engineering</h3><h4>Anna University, Chennai</h4><p>Syed Ammal Engineering College, Ramanathapuram · 70%</p><span class="edu-badge edu-badge--sec">First Class</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Patents -->
+<section id="patents" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">04</span><h2 class="section-title">Patents Published</h2></div>
+    <p style="color:var(--text-mid);font-size:.95rem;max-width:640px;margin-bottom:2.5rem">9 patents published covering IoT, AI, Cloud Computing and Smart Systems.</p>
+    <div class="patent-grid">
+      <div class="patent-card"><div class="patent-num">01</div><h3>System and Method for AI-Enabled Agri-Chatbot Integration with IoT Devices for Crop Delivery in Agriculture</h3><span class="patent-id">App. No. 202341063008</span><span class="patent-date">Oct 6, 2023</span></div>
+      <div class="patent-card"><div class="patent-num">02</div><h3>Real Time Monitoring, Detection and Early Warning System for Potential Landslides using IoT and Cloud Computing</h3><span class="patent-id">App. No. 202241043868 A</span><span class="patent-date">Aug 19, 2022</span></div>
+      <div class="patent-card"><div class="patent-num">03</div><h3>Machine Learning based Air Quality Management System</h3><span class="patent-id">App. No. 202241042855 A</span><span class="patent-date">Jul 29, 2022</span></div>
+      <div class="patent-card"><div class="patent-num">04</div><h3>Wireless Mobile Charging through Coin Insertion</h3><span class="patent-id">App. No. 202241040820</span><span class="patent-date">Jul 22, 2022</span></div>
+      <div class="patent-card"><div class="patent-num">05</div><h3>Smart Surveillance System with Facial Recognition and Image Processing Approach using AI</h3><span class="patent-id">App. No. 202241013636</span><span class="patent-date">Mar 25, 2022</span></div>
+      <div class="patent-card"><div class="patent-num">06</div><h3>An IoT based Necklace for Visually Impaired Persons to Protect Jewellery from Kidnappers and Thieves</h3><span class="patent-id">App. No. 202141021964 A</span><span class="patent-date">Jun 11, 2021</span></div>
+      <div class="patent-card"><div class="patent-num">07</div><h3>IoT and Cloud Based Low Cost Smart Irrigation System</h3><span class="patent-id">App. No. 202141006738 A</span><span class="patent-date">Feb 28, 2021</span></div>
+      <div class="patent-card"><div class="patent-num">08</div><h3>IoT Based Smart Cost Vegetables Washing Machine</h3><span class="patent-id">App. No. 202031044346</span><span class="patent-date">Feb 5, 2021</span></div>
+      <div class="patent-card"><div class="patent-num">09</div><h3>Cloud Computation Based E-Learning Platform</h3><span class="patent-id">App. No. 202041055413</span><span class="patent-date">Dec 25, 2020</span></div>
+    </div>
+  </div>
+</section>
+<!-- Research Papers (Journal Publications) -->
+<section id="papers" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">05</span><h2 class="section-title">Journal Publications</h2></div>
+    <p style="color:var(--text-mid);font-size:.95rem;max-width:640px;margin-bottom:2.5rem">Published in IEEE Xplore, Elsevier, Springer, Hindawi and other Scopus/UGC-CARE indexed journals.</p>
+    <div class="paper-list">
+      <div class="paper-item"><span class="paper-year">2023</span><h3>"Privacy preservation in wireless sensor network using energy efficient multipath routing for healthcare data"</h3><span class="paper-journal">Measurement: Sensors, vol.29, Elsevier, Oct 2023 · ISSN: 2665-9174</span></div>
+      <div class="paper-item"><span class="paper-year">2023</span><h3>"Recent Advances in Analysis and Detection of Tuberculosis System in Chest X-Ray Using Artificial Intelligence (AI) Techniques: A Review"</h3><span class="paper-journal">Current Materials Science, vol.15, no.3 · ISSN: 2666-1454</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Cyber security-based Multikey Management System in Cloud Environment"</h3><span class="paper-journal">IEEE Explore, ICEET 2022, Kuala Lumpur · doi: 10.1109/ICEET56468.2022.10007104</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Confident-Based Intrusion Detection System to Avoid Packet Drop Attacks for Wireless Sensor Network"</h3><span class="paper-journal">Mathematical Statistician and Engineering Applications, vol.71, no.4 · ISSN: 2984-7869, pp 9225–9238</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Estimating the Risk of Diabetes Using Association Rule Mining Based on Clustering"</h3><span class="paper-journal">Image Based Computing for Food and Health Analytics, Springer Link · ISBN: 978-3-031-22958-9, pp 25–35</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Remora optimization algorithm-based optimized node clustering technique for reliable data delivery in VANETs"</h3><span class="paper-journal">International Journal of Intelligent Networks, vol.3, pp: 74-79</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Clinical Cleanliness Robot using Artificial Intelligence"</h3><span class="paper-journal">Journal of Positive School Psychology, vol.6, no.5, pp: 5551-5556</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"A highly secured intrusion detection system for IoT using EXPSO-STFA feature selection for LAANN to detect attacks"</h3><span class="paper-journal">Cluster Computing, Springer US</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"IoT Based Smart Agriculture"</h3><span class="paper-journal">8th IEEE International Conference on Applied System Innovation (ICASI), IEEE Xplore</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Smart E-Health Records using IoT"</h3><span class="paper-journal">International Journal of All Research Education and Scientific Methods (IJARESM), vol.10, no.3 · ISSN: 2455-6211 · Impact Factor: 7.429</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Cancer Categorization Using Genetic Algorithm to Identify Biomarker Genes"</h3><span class="paper-journal">Journal of Health Care Engineering · doi: 10.1155/2022/5821938</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Blockchain Based Data Security and Privacy for Internet of Things Enabled Health Care System"</h3><span class="paper-journal">International Journal of Scientific Research in Science, Engineering and Technology · Impact Factor: 8.154</span></div>
+      <div class="paper-item"><span class="paper-year">2022</span><h3>"Advanced Deep Learning and Super Optimization Technique based on Classification of Medical Images"</h3><span class="paper-journal">International Journal of Mechanical Engineering · Scopus &amp; UGC-CARE Indexed · ISSN: 0974-5823</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"A Novel, Efficient, and Secure Anomaly Detection Technique Using DWU-ODBN for IoT-Enabled Multimedia Communication Systems"</h3><span class="paper-journal">Hindawi Wireless Communications and Mobile Computing · doi: 10.1155/2021/4989410</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"Blockchain based Secured Framework for Road Traffic Management using Fog Computing"</h3><span class="paper-journal">International Journal of Computational Intelligence in Control</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"An Intellectual Monitoring of Power Sector By Machine Learning Applications"</h3><span class="paper-journal">Nat. Volatiles &amp; Essent. Oils, vol.8, no.5</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"Medical Image Security Using a Visual Cryptography Technique along with Blockchain"</h3><span class="paper-journal">Design Engineering, vol.2021, no.6 · ISSN: 0011-9342, pp.5277-5290 · Impact Factor: 1.41</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"An Intellectual procurement innovation of smart grid power system with Wireless Communication networks based on Machine Learning"</h3><span class="paper-journal">International Journal of Nonlinear Analysis and Applications (IJNAA), vol.12, no.2 · ISSN: 2008-6822</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"Movie Review Classification Using Sentiment Analysis" — A. Ajina, Jaya Christiyan K G, M. Sathya</h3><span class="paper-journal">IRJMETS, vol.3, no.5 · ISSN: 2582-5208, pp.3542-3547 · Impact Factor: 5.354</span></div>
+      <div class="paper-item"><span class="paper-year">2021</span><h3>"Energy Efficient Witness Based Clone and Jamming Attack Detection in WSN" — M. Jeyaselvi, S. Suchitra, M. Sathya, R. Mekala</h3><span class="paper-journal">Journal of Green Engineering (JGE), vol.11, no.2 · ISSN: 1991-8178, pp.1525-1548</span></div>
+      <div class="paper-item"><span class="paper-year">2020</span><h3>"Performance Evaluation of Approximate Directional Routing Protocol for Hierarchical Network"</h3><span class="paper-journal">Journal of Critical Reviews (JCR), vol.3, no.7 · ISSN: 1991-8178, pp.1058-1067</span></div>
+      <div class="paper-item"><span class="paper-year">2016</span><h3>"Minimizing End to End Delay in MANET" — Sathya M, P. Ramanathan &amp; V. Palanisamy</h3><span class="paper-journal">Australian Journal of Basic and Applied Sciences, vol.10, no.12 · ISSN: 1991-8178, pp.1259-1273 · Impact Factor: 0.23</span></div>
+      <div class="paper-item"><span class="paper-year">2015</span><h3>"Approximate Directional Routing Protocol" — V. Palanisamy &amp; Sathya M</h3><span class="paper-journal">International Journal of Applied Engineering Research, vol.10, no.55 · ISSN: 0973-4562, pp.1605-1609</span></div>
+      <div class="paper-item"><span class="paper-year">2013</span><h3>"A performance comparison of CDA and ICDA in ADRP"</h3><span class="paper-journal">International Journal of Microwave and Wireless Technologies, vol.5, no.5 · ISSN: 1759-0787, pp. 653-658 · Impact Factor: 1.064</span></div>
+    </div>
+  </div>
+</section>
+<!-- Conference Papers Presented -->
+<section id="conferences" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">06</span><h2 class="section-title">Conference Papers Presented</h2></div>
+    <div class="conf-list">
+      <div class="conf-item"><h3>"Intelligent Energy Meter using Internet of Things"</h3><p>11th International Conference on Next Generation Digital Technologies, Akal University &amp; Central University of Punjab, Bathinda · Jan 3-4, 2024</p></div>
+      <div class="conf-item"><h3>"DNN and Cryptography based Data Monitoring System for IoMT Environment"</h3><p>International Conference on Sustainable Communication Networks and Application, Bharath Niketan Engineering College, Theni · Nov 15-17, 2023</p></div>
+      <div class="conf-item"><h3>"Performance Augmentation of Dimos Transistor"</h3><p>11th FICTA-2023, Cardiff Metropolitan University, Cardiff, UK · Apr 11-12, 2023</p></div>
+      <div class="conf-item"><h3>"Cyber security based Multikey Management System in Cloud"</h3><p>8th ICEET 2022, Kuala Lumpur, Malaysia · Oct 27-28, 2022</p></div>
+      <div class="conf-item"><h3>"Automatic Handicraft Machine" — Best Paper Award</h3><p>ICETSET 2022, AICTE Sponsored, Jerusalem College of Engineering, Anna University · Jul 7-8, 2022</p></div>
+      <div class="conf-item"><h3>"IoT Based Smart Agriculture"</h3><p>8th IEEE ICASI-2022, Nantou, Taiwan · Apr 21-23, 2022</p></div>
+      <div class="conf-item"><h3>"SVM based Cloning and Jamming Attack detection in IoT Sensor Networks"</h3><p>3rd AICTC 2021, BMK Global Foundation &amp; CSI, Udaipur · Dec 20-21, 2021</p></div>
+      <div class="conf-item"><h3>"Approximate Directional Routing Protocol for Hierarchical Network"</h3><p>NCSRIET-2020, Sri Ranganathar Institute of Engineering and Technology · Jun 24-25, 2020</p></div>
+      <div class="conf-item"><h3>"Minimizing End to End Delay in MANET"</h3><p>ICCS-2016, Pondicherry Engineering College · 2016</p></div>
+      <div class="conf-item"><h3>"Performance Comparison of DSR &amp; AODV with ADRP"</h3><p>National Conference on Recent Trends in ICT-2016, Bannari Amman Institute of Technology · 2016</p></div>
+      <div class="conf-item"><h3>"Approximate Directional Routing Protocol"</h3><p>ICAAET-2015, Syed Ammal Engineering College · 2015</p></div>
+      <div class="conf-item"><h3>"A survey on Approximate Directional Routing Protocol"</h3><p>NCRTECE-2014, Shree Motilal Kanhaiyalal Fomra Institute of Technology · 2014</p></div>
+      <div class="conf-item"><h3>"Applying On-Demand Multicast Routing Protocol for Developing A Self Repairing Tree Topology in MANET"</h3><p>ACSIT-2013, Anna University Tirunelveli · 2013</p></div>
+      <div class="conf-item"><h3>Seminar: "Approximation Algorithms"</h3><p>Info Institute of Engineering, Coimbatore · Sep 16, 2013</p></div>
+      <div class="conf-item"><h3>Seminar: "Various Routing Protocols in MANET"</h3><p>Info Institute of Engineering, Coimbatore · Sep 5, 2017</p></div>
+    </div>
+  </div>
+</section>
+<!-- Books -->
+<section id="books" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">07</span><h2 class="section-title">Books Published</h2></div>
+    <div class="books-grid">
+      <div class="book-card"><div class="book-icon"><i class="fas fa-book"></i></div><div><h3>Computer Networks</h3><p>Charulatha Publications · Dec 7, 2021</p><span class="book-isbn">ISBN: 9789355771018</span></div></div>
+      <div class="book-card"><div class="book-icon"><i class="fas fa-book"></i></div><div><h3>Internet of Things</h3><p>Charulatha Publications · Dec 1, 2021</p><span class="book-isbn">ISBN: 9789355770790</span></div></div>
+      <div class="book-card"><div class="book-icon"><i class="fas fa-book-open"></i></div><div><h3>Advances in Intelligent Systems and Technologies</h3><p>Anapub Publications · Dec 30, 2022</p><span class="book-isbn">ISBN Online: 978-9914-9946-0-5</span></div></div>
+      <div class="book-card"><div class="book-icon"><i class="fas fa-book-open"></i></div><div><h3>Augmented Reality for Interactive Education</h3><p>RAALTECH Publications · Jul 12, 2023</p><span class="book-isbn">ISBN: 9788196310066</span></div></div>
+    </div>
+  </div>
+</section>
+<!-- Awards -->
+<section id="awards" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">08</span><h2 class="section-title">Awards &amp; Recognition</h2></div>
+    <div class="awards-row">
+      <div class="award-item"><div class="award-icon"><i class="fas fa-trophy"></i></div><div><h3>Best Paper Award</h3><p>"Automatic Handicraft Machine" — ICETSET 2022, AICTE Sponsored, Jerusalem College of Engineering, Anna University, TN</p><span>Jul 2022</span></div></div>
+      <div class="award-item"><div class="award-icon"><i class="fas fa-certificate"></i></div><div><h3>Certificate of Appreciation</h3><p>World Innovation Patent Conclave, participation recognition</p><span>Aug 2022</span></div></div>
+      <div class="award-item"><div class="award-icon"><i class="fas fa-star"></i></div><div><h3>Best Women Faculty Award</h3><p>Novel Research Academy, Puducherry — Category: Computer Science &amp; Engineering (AY 2020-21)</p><span>Mar 5, 2021</span></div></div>
+    </div>
+  </div>
+</section>
+<!-- Professional Activities -->
+<section id="activities" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">09</span><h2 class="section-title">Professional Activities</h2></div>
+    <div class="activity-list">
+      <div class="activity-item"><strong>Resource Person — Webinar on "AI-Powered Chatbots Changing and Impacting Mass Customization" (Dec 10, 2024)</strong>Institution of Engineers (India), Coimbatore Local Centre · Dept. of AI &amp; DS, Akshaya College of Engineering and Technology, Coimbatore</div>
+      <div class="activity-item"><strong>Guest Lecture — "IoT and Machine Learning in Smart Agriculture" (Sep 11, 2024)</strong>RVS School of Engineering &amp; Technology</div>
+      <div class="activity-item"><strong>Session Chair — ICRACST-2024 (Aug 10-11, 2024)</strong>M.G.V.C Arts, Commerce &amp; Science College, Vijayapur, Karnataka &amp; RSP Conference Hub, Coimbatore, Tamil Nadu</div>
+      <div class="activity-item"><strong>Resource Person — 2-day SDP on "IoT Applications in Agricultural Industries" (Jul 31 – Aug 1, 2024)</strong>Jerusalem College of Engineering</div>
+      <div class="activity-item"><strong>Resource Person — 5-day Online SDP on Universal Human Values: "Harmony in Family and Society" (Oct 5, 2023)</strong>HKBK College of Engineering, Bengaluru · ISTE Chapter</div>
+      <div class="activity-item"><strong>Resource Person — 5-day Webinar Series: "Navigating Agriculture, Generative AI, Cryptography and IoT Revolution" (Aug 12, 2023)</strong>Presidency University, Bengaluru</div>
+      <div class="activity-item"><strong>Resource Person — 2-day SDP: "Role of Machine Learning in IoT" (Jun 27-28, 2023)</strong>AMC Engineering College, Bengaluru</div>
+      <div class="activity-item"><strong>Session Chair — ICACCS 2023 (Mar 17-18, 2023)</strong>Sri Eshwar College of Engineering, Coimbatore</div>
+      <div class="activity-item"><strong>Guest of Honor — TECHCARNIVAL 2k22, Special Address (Oct 1, 2022)</strong>Syed Ammal Engineering College, Ramanathapuram</div>
+      <div class="activity-item"><strong>VTU Nominee — Financial Assistance for Final Year Student Innovation Projects 2022 (Jul 9, 2022)</strong>Evaluated projects at KNS Institute of Technology, Bangalore, Karnataka</div>
+      <div class="activity-item"><strong>Keynote Address — "International Conference on Information Processing and Computing 2022" (Jun 27, 2022)</strong>QIS College of Engineering and Technology, Ongole (Virtual Conference)</div>
+      <div class="activity-item"><strong>Session Chair — ICACCS 2022 (Mar 25-26, 2022)</strong>Sri Eshwar College of Engineering (Autonomous), Coimbatore</div>
+      <div class="activity-item"><strong>Guest Lecture — "Internet of Things for Beginners" (Mar 4-5, 2022)</strong>Jerusalem College of Engineering, Chennai</div>
+      <div class="activity-item"><strong>Guest Lecture — "Internet of Things: an Overview" (Feb 28, 2022)</strong>Ashoka Women's Engineering College, Kurnool, Andhra Pradesh</div>
+      <div class="activity-item"><strong>Webinar — "IoT for Smart Applications" (Jan 20, 2022)</strong>AMC Engineering College, Bangalore, Karnataka</div>
+      <div class="activity-item"><strong>General Chair — ICACCABT 2022 (Jan 28-29, 2022)</strong>International Conference on Advances in Computing, Communication, Automation and Biomedical Technology, Coimbatore</div>
+      <div class="activity-item"><strong>Guest Lecture — "Information Security" (Apr 1, 2021)</strong>Sri Ranganathar Institute of Engineering and Technology, Coimbatore</div>
+      <div class="activity-item"><strong>Session Chair — ICACCS 2021 (Mar 19-20, 2021)</strong>Sri Eshwar College of Engineering (Autonomous), Coimbatore</div>
+      <div class="activity-item"><strong>Session Chair — ICACCABT 2020 (Dec 11, 2020)</strong>KPR Institute of Engineering and Technology</div>
+      <div class="activity-item"><strong>Convenor — Webinar on "Overview of Cloud Computing" (Jul 11, 2020)</strong>Electronics and Communication Engineering Department, Islamiah Institute of Technology</div>
+      <div class="activity-item"><strong>Convenor — Webinar on "Basics of Android Application Development" (Jul 22, 2020)</strong>Computer Science and Engineering Department</div>
+      <div class="activity-item"><strong>Convenor — Webinar on "Continuous Improvement and Effective Leadership" (Jul 28, 2020)</strong>Department of Mechanical Engineering</div>
+      <div class="activity-item"><strong>Convenor — Online Quiz on "Wireless Mobile Communication" (Jul 29, 2020)</strong>Islamiah Institute of Technology, Bangalore</div>
+      <div class="activity-item"><strong>Journal Reviewer — Elsevier</strong>"Computers and Electrical Engineering"</div>
+      <div class="activity-item"><strong>Journal Reviewer — EAI</strong>"EScripts" Journal</div>
+      <div class="activity-item"><strong>Journal Reviewer — IJITN</strong>"International Journal of Interdisciplinary Telecommunications and Networking"</div>
+      <div class="activity-item"><strong>Journal Reviewer — Springer Nature</strong>"Journal of Ambient Intelligence and Humanized Computing" (AIHC)</div>
+      <div class="activity-item"><strong>Journal Reviewer — IJCRT</strong>"International Journal of Creative Research Thoughts"</div>
+      <div class="activity-item"><strong>Organizing Committee Member</strong>National Level Seminars and International Conferences</div>
+      <div class="activity-item"><strong>Department Coordinator</strong>Seminars, Workshops and Value-Added Courses</div>
+    </div>
+  </div>
+</section>
+<!-- Workshops & FDPs -->
+<section id="workshops" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">10</span><h2 class="section-title">Workshops &amp; FDPs Attended</h2></div>
+    <div class="workshop-list">
+      <div class="workshop-item">3-day Workshop on <strong>"Big Data Analytics"</strong> — Dept. of AI &amp; DS, CSE, CARE College of Engineering, Trichy (Jul 24-26, 2023)</div>
+      <div class="workshop-item">5-day STTP on <strong>"Antenna Design: Future Trends and New Applications"</strong> — Dept. of ECE, CARE College of Engineering &amp; Tesla Minds, Chennai (Aug 1-5, 2022)</div>
+      <div class="workshop-item">5-day Workshop on <strong>"Empowerment of Agriculture Using Modern Technology"</strong> — Dept. of ECE, Sri Sairam College of Engineering, Bangalore (May 23-27, 2022)</div>
+      <div class="workshop-item">5-day STTP on <strong>"Machine Learning on IoT Applications"</strong> — Dept. of CSE, Adithya Institute of Technology, ISTE Sponsored, Anna University, Tamil Nadu (Dec 20-24, 2021)</div>
+      <div class="workshop-item">E-FDP on <strong>"Developing Research Orientation of Academicians in Higher Education Institutions"</strong> — City Engineering College, Bangalore (Aug 23, 2021)</div>
+      <div class="workshop-item">3-day Workshop on <strong>"Data Science with Machine Learning using R Programming"</strong> — Computer Society of India (Kancheepuram Chapter) &amp; SRM Institute of Science and Technology, Kattankulathur (Aug 18-20, 2021)</div>
+      <div class="workshop-item">5-day Workshop on <strong>"Innovation Incubation Start-ups and Research Challenges in India"</strong> — QIS College of Engineering and Technology, Andhra Pradesh (Jun 14-18, 2021)</div>
+      <div class="workshop-item">Webinar on <strong>"Tools and Application of Machine Learning and Artificial Intelligence"</strong> — Global Emerging Tech Summit 2021, University of Emerging Technologies (Apr 7, 2021)</div>
+      <div class="workshop-item"><strong>"Higher Education Innovation Summit 2021"</strong> — "Reimaging Admissions and Marketing Strategy for Higher Education Institutions" — Corporate Governed Universities Summit (Mar 10, 2021)</div>
+      <div class="workshop-item">5-day Virtual FDP on <strong>"Network Simulation Tools — NS2 and NS3"</strong> — REVA University, Bangalore (Aug 10-14, 2020)</div>
+      <div class="workshop-item">5-day Online FDP on <strong>"Artificial Intelligence Applications through Machine Learning"</strong> — Balaji Institute of Technology &amp; Science, Warangal (Jul 14-18, 2020)</div>
+      <div class="workshop-item">Webinar on <strong>"Antenna Design using HFSS"</strong> — Eswari Engineering College &amp; Pantech E Learning (Jun 29, 2020)</div>
+      <div class="workshop-item">5-day Online FDP on <strong>"Recent Trends in Machine Learning with Python — A Hands-on Approach"</strong> — Dayananda Sagar University, Bangalore (Jul 6-10, 2020)</div>
+      <div class="workshop-item">Webinar on <strong>"Applying Convolutional Neural Networks — A Deep Learning"</strong> — Kalasalingam Institute of Technology &amp; Pantech E Learning (Jun 2, 2020)</div>
+      <div class="workshop-item">5-day Hands-on FDP on <strong>"Data Science using Python"</strong> — Jeppiaar Institute of Technology, Chennai (May 18-22, 2020)</div>
+      <div class="workshop-item">Webinar on <strong>"Artificial Intelligence for Employee Attribution"</strong> — Adhiyamaan College of Engineering &amp; Pantech E Learning (May 29, 2020)</div>
+      <div class="workshop-item">Webinar on <strong>"Building Deep Learning Applications for Bigdata"</strong> — Kings Engineering College, Chennai (May 28, 2020)</div>
+      <div class="workshop-item">Webinar on <strong>"Cloud Based Engineering Computations"</strong> — SRIET, Coimbatore (May 15, 2020)</div>
+      <div class="workshop-item">R Training Seminar — Spoken Tutorial Project, <strong>IIT Bombay</strong> (Mar 2020)</div>
+      <div class="workshop-item">2-week ISTE Workshop on <strong>"Introduction to Research Methodologies"</strong> — Indian Institute of Technology Bombay</div>
+      <div class="workshop-item">2-day Workshop on <strong>"Network Simulation for MANETs VANETs and Sensor Networks using NS2"</strong> — School of Computing Science and Engineering, VIT Chennai</div>
+      <div class="workshop-item">1-day Workshop on <strong>"WSN in Mobile and Pervasive Computing &amp; Context Aware Framework"</strong> — Dept. of IT, MIT, Anna University, Chennai</div>
+      <div class="workshop-item">2-day Workshop on <strong>"Enabling the Business in Clouds &amp; 4G Wireless Systems &amp; Beyond"</strong> — Dept. of IT, MIT, Anna University, Chennai</div>
+      <div class="workshop-item">2-day Workshop on <strong>"Software Quality"</strong> — Dept. of IT, Ministry of Communication and Information Technology, Govt. of India, New Delhi</div>
+      <div class="workshop-item">2-day Workshop on <strong>"Recent Trends in Networking"</strong> — School of PG Studies, Anna University Coimbatore &amp; Benchmark Electronics System Pvt. Ltd. &amp; i-Square System Coimbatore</div>
+      <div class="workshop-item">2-day National Seminar on <strong>"Intellectual Property Rights"</strong> — Anna University Coimbatore &amp; Controller General of Patents &amp; Design, Chennai</div>
+    </div>
+  </div>
+</section>
+<!-- Subjects Handled -->
+<section id="subjects" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">11</span><h2 class="section-title">Subjects Handled</h2></div>
+    <div class="subjects-grid">
+      <div class="subject-chip">Computer Networks &amp; Security</div>
+      <div class="subject-chip">Data Communication</div>
+      <div class="subject-chip">Internet of Things</div>
+      <div class="subject-chip">Information Security</div>
+      <div class="subject-chip">Object Oriented Programming</div>
+      <div class="subject-chip">Design &amp; Analysis of Algorithm</div>
+      <div class="subject-chip">Data Structures</div>
+      <div class="subject-chip">Operating System</div>
+      <div class="subject-chip">Database Management System</div>
+      <div class="subject-chip">Fundamentals of Computing</div>
+      <div class="subject-chip">Artificial Intelligence</div>
+    </div>
+  </div>
+</section>
+<!-- Skills -->
+<section id="skills" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">12</span><h2 class="section-title">Skills &amp; Expertise</h2></div>
+    <div class="skills-grid">
+      <div class="skill-group"><h3 class="skill-group-title">Programming &amp; Tools</h3><div class="skill-tags"><span>Python</span><span>C</span><span>C++</span><span>HTML</span><span>MySQL</span><span>MS SQL</span><span>NS2</span><span>LaTeX</span><span>Enterprise Linux</span><span>Windows</span></div></div>
+      <div class="skill-group"><h3 class="skill-group-title">Research Areas</h3><div class="skill-tags"><span>MANET</span><span>Routing Protocols</span><span>IoT</span><span>Machine Learning</span><span>Cloud Computing</span><span>Cybersecurity</span><span>WSN</span><span>VANETs</span></div></div>
+      <div class="skill-group"><h3 class="skill-group-title">Academic &amp; Leadership</h3><div class="skill-tags"><span>OBE Curriculum Design</span><span>NAAC Accreditation</span><span>Research Supervision</span><span>PhD Mentorship</span><span>VTU Examinations</span><span>Academic Administration</span></div></div>
+    </div>
+  </div>
+</section>
+<!-- Community -->
+<section id="community" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">13</span><h2 class="section-title">Memberships &amp; Community</h2></div>
+    <div class="community-grid">
+      <div>
+        <h3 class="community-col-title"><i class="fas fa-id-badge"></i> Professional Memberships</h3>
+        <ul class="membership-list">
+          <li><span class="mem-org">IEEE</span><span class="mem-since">Member since Feb 2024</span></li>
+          <li><span class="mem-org">ISTE</span><span class="mem-since">Lifetime Member · LM 84032</span></li>
+          <li><span class="mem-org">IAENG</span><span class="mem-since">Lifetime Member · #126953</span></li>
+          <li><span class="mem-org">Institution of Engineers (India)</span><span class="mem-since">Lifetime Member</span></li>
+          <li><span class="mem-org">Global Society for Technical Education</span><span class="mem-since">Lifetime Member</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="community-col-title"><i class="fas fa-hands-helping"></i> Volunteer &amp; Extra-Curricular</h3>
+        <div class="volunteer-cards">
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Jury — State Level Online Competition</h4><p>"India's Future Through the Eyes of Youth" — Valluvar College of Science and Management (Oct 15, 2020)</p></div></div>
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Volunteer — Greenpeace India &amp; Chennai Volunteers</h4><p>Active volunteer for social and environmental causes</p></div></div>
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Red Ribbon Club In-charge</h4><p>HIV-AIDS awareness &amp; blood donation camps — Info Institute of Engineering</p></div></div>
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Participated — "One Walk and One Hope"</h4><p>CAN-STOP &amp; MEDALL, Breast Cancer Awareness Month (Oct 29, 2017)</p></div></div>
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Chief Editor — Rotary Club</h4><p>Syed Ammal Engineering College, 2002–2006</p></div></div>
+          <div class="vol-card"><div class="vol-dot"></div><div><h4>Committee Roles</h4><p>Chairman — Anti-Ragging, Anti-Sexual Harassment, Grievance Redressal, Student Counselling &amp; SC ST OBC Cells · Dept. LIC Coordinator</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Contact -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="section-header"><span class="section-num">14</span><h2 class="section-title">Get In Touch</h2></div>
+    <div class="contact-layout">
+      <div>
+        <p class="contact-lead">Open for collaborative research, speaking engagements, and academic discussions.</p>
+        <div class="contact-details">
+          <div class="contact-detail-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><span>Location</span><strong>Theni, Tamil Nadu, India</strong></div></div>
+          <a href="/cdn-cgi/l/email-protection#127f6173667a6b7323273431242629757f737b7e3c717d7f" class="contact-detail-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><span>Email</span><strong>msathya15&#64;gmail.com</strong></div></a>
+        </div>
+      </div>
+      <div>
+        <form id="contact-form" onsubmit="return handleSubmit(event)">
+          <div class="field-group"><label for="c-name">Full Name</label><input type="text" id="c-name" name="from_name" required placeholder="Dr. Jane Doe"></div>
+          <div class="field-group"><label for="c-email">Email Address</label><input type="email" id="c-email" name="reply_to" required placeholder="jane@university.edu"></div>
+          <div class="field-group"><label for="c-msg">Message</label><textarea id="c-msg" name="message" rows="5" required placeholder="I'd like to discuss a collaborative research opportunity..."></textarea></div>
+          <button type="submit" class="btn btn-primary btn-full" id="submit-btn">Send Message &nbsp;<i class="fas fa-paper-plane"></i></button>
+          <div id="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner container">
+    <div class="footer-brand"><h3>Dr. M. Sathya</h3><p>Researcher &nbsp;·&nbsp; Mentor &nbsp;·&nbsp; Academic Leader</p></div>
+    <nav class="footer-nav">
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#patents">Patents</a>
+      <a href="#papers">Papers</a><a href="#conferences">Conferences</a><a href="#books">Books</a>
+      <a href="#activities">Activities</a><a href="#workshops">Workshops</a><a href="#contact">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; <span id="secret-trigger" onclick="secretClick()" style="cursor:default;user-select:none">2025</span> Dr. M. Sathya. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+/* =====================================================
+   SECRET ADMIN TRIGGER
+   Click the "2025" text in footer 5 times quickly
+   ===================================================== */
+var _sc=0,_st=null;
+function secretClick(){
+  _sc++;
+  clearTimeout(_st);
+  var el=document.getElementById('secret-trigger');
+  if(el){el.style.color='rgba(184,150,46,0.8)';setTimeout(function(){el.style.color='rgba(245,240,232,0.3)';},150);}
+  if(_sc>=5){
+    _sc=0;
+    window.open('admin.html','_blank');
+  } else {
+    _st=setTimeout(function(){_sc=0;},1500);
+  }
+}
+</script>
+</body>
+</html>
