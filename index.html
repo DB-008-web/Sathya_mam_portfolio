@@ -40,8 +40,8 @@ section[id]{scroll-margin-top:130px}
 .section-title{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--green);position:relative}
 .section-title::after{content:'';display:block;width:40px;height:2px;background:var(--gold);margin-top:.5rem}
 /* NAV */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.4rem 0;transition:var(--tr);background:rgba(245,240,232,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent}
-.navbar.scrolled{background:rgba(245,240,232,.98);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:.9rem 0;border-bottom:1px solid var(--ivory-darker);box-shadow:var(--s1)}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.4rem 0;transition:var(--tr)}
+.navbar.scrolled{background:rgba(245,240,232,.96);backdrop-filter:blur(16px);padding:.9rem 0;border-bottom:1px solid var(--ivory-darker);box-shadow:var(--s1)}
 .nav-container{max-width:1160px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:baseline;gap:.3rem}
 .logo-dr{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--gold)}
@@ -676,5 +676,6 @@ function secretClick(){
   }
 }
 </script>
+<script src="script.js"></script>
 </body>
 </html>
