@@ -203,6 +203,22 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(184,150,46,0.3);border-radius:3px}
 /* Mobile sidebar toggle */
 .sidebar-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--bg2);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;color:var(--text)}
+/* Message cards */
+.msg-card{padding:1.4rem 1.6rem;border-bottom:1px solid rgba(255,255,255,0.04);transition:var(--tr);cursor:pointer}
+.msg-card:hover{background:rgba(255,255,255,0.03)}
+.msg-card.unread{background:rgba(184,150,46,0.06);border-left:3px solid var(--gold)}
+.msg-card.read{border-left:3px solid transparent}
+.msg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:1rem}
+.msg-sender{font-size:.92rem;font-weight:600;color:var(--ivory)}
+.msg-email{font-size:.75rem;color:var(--text-soft)}
+.msg-time{font-size:.72rem;color:var(--text-dim);white-space:nowrap;flex-shrink:0}
+.msg-body{font-size:.85rem;color:var(--text-soft);line-height:1.6}
+.msg-unread-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;display:inline-block;margin-right:.5rem;flex-shrink:0}
+.msg-actions{display:flex;gap:.5rem;margin-top:.8rem}
+.btn-msg-read{font-size:.72rem;padding:.25rem .7rem;background:rgba(184,150,46,0.12);border:1px solid rgba(184,150,46,0.25);color:var(--gold-light);border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
+.btn-msg-read:hover{background:rgba(184,150,46,0.25)}
+.btn-msg-del{font-size:.72rem;padding:.25rem .7rem;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.2);color:#E74C3C;border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
+.btn-msg-del:hover{background:rgba(192,57,43,0.25)}
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
   .main-content{margin-left:0}.sidebar-toggle{display:flex}
@@ -281,6 +297,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
       <nav class="sidebar-nav">
         <div class="nav-section-label">Overview</div>
         <div class="sidebar-link active" onclick="showPanel('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
+        <div class="sidebar-link" onclick="showPanel('messages')"><i class="fas fa-envelope"></i> Messages <span class="badge" id="b-messages" style="background:var(--red)">0</span></div>
 
         <div class="nav-section-label">Academic</div>
         <div class="sidebar-link" onclick="showPanel('education')"><i class="fas fa-graduation-cap"></i> Education</div>
@@ -629,6 +646,19 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
           </div>
         </div>
 
+        <!-- ===== MESSAGES ===== -->
+        <div class="section-panel" id="panel-messages">
+          <div class="entries-card">
+            <div class="entries-header">
+              <h3><i class="fas fa-envelope"></i> Inbox <span class="entry-count" id="c-messages">0 messages</span></h3>
+              <button onclick="markAllRead()" style="background:rgba(184,150,46,0.15);border:1px solid rgba(184,150,46,0.3);color:var(--gold-light);font-size:.75rem;padding:.3rem .9rem;border-radius:var(--radius);cursor:pointer;">
+                <i class="fas fa-check-double"></i> Mark all read
+              </button>
+            </div>
+            <div class="entries-list" id="list-messages"></div>
+          </div>
+        </div>
+
       </div><!-- end page-content -->
     </main>
   </div>
@@ -661,6 +691,8 @@ var DB = {
   subjects:   load('subjects',[]),
   community:  load('community',[]),
 };
+// Messages stored separately (not via addEntry)
+var MSGS = load('messages',[]);
 
 // ---- LOGIN ----
 function doLogin(){
@@ -691,6 +723,7 @@ function doLogout(){
 function initAdmin(){
   updateClock();setInterval(updateClock,60000);
   renderAll();
+  renderMessages();
   buildDashboard();
   // Load stats into fields
   var s=load('stats',{years:13,patents:9,papers:24,books:4});
@@ -710,7 +743,7 @@ function updateClock(){
 
 // ---- PANEL NAVIGATION ----
 var panelTitles={
-  dashboard:'Dashboard',patents:'Patents',papers:'Journal Publications',
+  dashboard:'Dashboard',messages:'Messages',patents:'Patents',papers:'Journal Publications',
   conferences:'Conference Papers',books:'Books Published',awards:'Awards & Recognition',
   activities:'Professional Activities',workshops:'Workshops & FDPs',
   education:'Education',experience:'Experience',skills:'Skills',
@@ -726,6 +759,7 @@ function showPanel(name){
   });
   document.getElementById('topbar-heading').textContent=panelTitles[name]||name;
   document.getElementById('topbar-sub').textContent='Manage your '+panelTitles[name];
+  if(name==='messages') renderMessages(); // always refresh inbox
   if(window.innerWidth<=900) closeSidebar();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
@@ -916,6 +950,63 @@ function updateBadges(){
     var b=document.getElementById('b-'+k);
     if(b) b.textContent=DB[k].length;
   });
+  // Message badge shows UNREAD count
+  var unread=MSGS.filter(function(m){return !m.read;}).length;
+  var bm=document.getElementById('b-messages');
+  if(bm){bm.textContent=unread;bm.style.display=unread>0?'':'none';}
+}
+
+// ---- MESSAGES ----
+function renderMessages(){
+  MSGS = load('messages',[]);
+  var list=document.getElementById('list-messages');
+  var count=document.getElementById('c-messages');
+  if(!list) return;
+  if(count) count.textContent=MSGS.length+' '+(MSGS.length===1?'message':'messages');
+  if(MSGS.length===0){
+    list.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet. They will appear here when someone contacts you.</p></div>';
+    updateBadges();return;
+  }
+  var html='';
+  // Show newest first
+  var sorted=MSGS.slice().sort(function(a,b){return b.id-a.id;});
+  sorted.forEach(function(m){
+    html+='<div class="msg-card '+(m.read?'read':'unread')+'">';
+    html+='<div class="msg-header">';
+    html+='<div style="display:flex;align-items:center;gap:.5rem">';
+    if(!m.read) html+='<span class="msg-unread-dot"></span>';
+    html+='<div><div class="msg-sender">'+escHtml(m.name)+'</div><div class="msg-email">'+escHtml(m.email)+'</div></div>';
+    html+='</div><div class="msg-time">'+escHtml(m.time)+'</div>';
+    html+='</div>';
+    html+='<div class="msg-body">'+escHtml(m.msg)+'</div>';
+    html+='<div class="msg-actions">';
+    if(!m.read) html+='<button class="btn-msg-read" onclick="markRead('+m.id+')"><i class="fas fa-check"></i> Mark read</button>';
+    html+='<button class="btn-msg-del" onclick="deleteMsg('+m.id+')"><i class="fas fa-trash"></i> Delete</button>';
+    html+='<a href="mailto:'+escHtml(m.email)+'?subject=Re: Your message" class="btn-msg-read" style="text-decoration:none"><i class="fas fa-reply"></i> Reply</a>';
+    html+='</div></div>';
+  });
+  list.innerHTML=html;
+  updateBadges();
+}
+function markRead(id){
+  MSGS=load('messages',[]);
+  MSGS.forEach(function(m){if(m.id===id)m.read=true;});
+  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
+  renderMessages();
+}
+function markAllRead(){
+  MSGS=load('messages',[]);
+  MSGS.forEach(function(m){m.read=true;});
+  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
+  renderMessages();
+  showToast('All messages marked as read.');
+}
+function deleteMsg(id){
+  MSGS=load('messages',[]);
+  MSGS=MSGS.filter(function(m){return m.id!==id;});
+  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
+  renderMessages();
+  showToast('Message deleted.');
 }
 var dashIcons={patents:'certificate',papers:'file-alt',conferences:'chalkboard-teacher',books:'book',awards:'trophy',activities:'star',workshops:'tools'};
 var dashColors={patents:'#B8962E',papers:'#2D5A3F',conferences:'#6c3483',books:'#1a5276',awards:'#c0392b',activities:'#1a6b3a',workshops:'#935116'};
