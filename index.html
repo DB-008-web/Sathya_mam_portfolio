@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr. M. Sathya Sathishkumar | Academic Portfolio</title>
+<title>Dr. M. Sathya | Academic Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
@@ -291,7 +291,7 @@ section[id]{scroll-margin-top:130px}
   <div class="hero-layout">
     <div class="hero-left">
       <div class="hero-eyebrow f1"><span class="eyebrow-line"></span><span>Academic Portfolio</span></div>
-      <h1 class="hero-name f2"><em>Dr. M. Sathya Sathishkumar</em><strong>(She/Her)</strong></h1>
+      <h1 class="hero-name f2"><em>Dr. M. Sathya sathiskumar</em><strong>(She/Her)</strong></h1>
       <div class="hero-role-wrapper f3"><span class="role-prefix">Currently —</span><span id="typewriter" class="role-text"></span><span class="cursor">|</span></div>
       <p class="hero-spec f3">Networking &nbsp;·&nbsp; MANET &nbsp;·&nbsp; IoT &nbsp;·&nbsp; AI &amp; ML &nbsp;·&nbsp; Cloud Computing</p>
       <div class="hero-cta f4">
@@ -671,245 +671,137 @@ function secretClick(){
 }
 
 /* ===================================================
-   DYNAMIC CONTENT LOADER
-   Reads admin-saved localStorage entries and appends
-   them to each section with correct sequential numbers
-   and auto-updates the hero stat counters.
+   CONTACT FORM — saves message to localStorage
+   so it appears in the admin Messages inbox
+   =================================================== */
+function handleSubmit(e){
+  e.preventDefault();
+  var name  = document.getElementById('c-name').value.trim();
+  var email = document.getElementById('c-email').value.trim();
+  var msg   = document.getElementById('c-msg').value.trim();
+
+  // Save to localStorage for admin inbox
+  try{
+    var msgs = JSON.parse(localStorage.getItem('mss_messages')||'[]');
+    msgs.push({
+      id:    Date.now(),
+      name:  name,
+      email: email,
+      msg:   msg,
+      time:  new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}),
+      read:  false
+    });
+    localStorage.setItem('mss_messages', JSON.stringify(msgs));
+  }catch(err){}
+
+  // UI feedback
+  var btn = document.getElementById('submit-btn');
+  btn.innerHTML = '<i class="fas fa-check"></i> &nbsp;Message Sent!';
+  btn.style.background = '#2D5A3F';
+  btn.disabled = true;
+  setTimeout(function(){
+    btn.innerHTML = 'Send Message &nbsp;<i class="fas fa-paper-plane"></i>';
+    btn.style.background = '';
+    btn.disabled = false;
+    e.target.reset();
+  }, 3000);
+  return false;
+}
+
+/* ===================================================
+   DYNAMIC CONTENT LOADER — reads from admin localStorage
    =================================================== */
 (function(){
-  function loadDB(key){
-    try{var v=localStorage.getItem('mss_'+key);return v?JSON.parse(v):[];}
-    catch(e){return[];}
-  }
-  function esc(s){
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
+  function loadDB(key){try{var v=localStorage.getItem('mss_'+key);return v?JSON.parse(v):[];}catch(e){return[];}}
+  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function pad(n){return n<10?'0'+n:String(n);}
 
-  /* ---- PATENTS: append at end with next sequential number ---- */
-  var newPatents = loadDB('patents');
-  if(newPatents.length){
-    var pg = document.getElementById('dyn-patents');
+  /* PATENTS — append at end with sequential number */
+  var nP=loadDB('patents');
+  if(nP.length){
+    var pg=document.getElementById('dyn-patents');
     if(pg){
-      var existing = pg.querySelectorAll('.patent-card').length; // count static cards
-      newPatents.forEach(function(p, i){
-        var num = existing + i + 1;
-        var card = document.createElement('div');
-        card.className = 'patent-card';
-        card.innerHTML =
-          '<div class="patent-num">'+pad(num)+'</div>'+
-          '<h3>'+esc(p.title)+'</h3>'+
-          '<span class="patent-id">App. No. '+esc(p.appno)+'</span>'+
-          '<span class="patent-date">'+esc(p.date)+'</span>';
-        pg.appendChild(card); // append to END
+      var base=pg.querySelectorAll('.patent-card').length;
+      nP.forEach(function(p,i){
+        var card=document.createElement('div');
+        card.className='patent-card';
+        card.innerHTML='<div class="patent-num">'+pad(base+i+1)+'</div><h3>'+esc(p.title)+'</h3><span class="patent-id">App. No. '+esc(p.appno)+'</span><span class="patent-date">'+esc(p.date)+'</span>';
+        pg.appendChild(card);
       });
-      // Update patents stat counter
-      var total = existing + newPatents.length;
-      var pill = document.getElementById('stat-pill-patents');
-      var num  = document.getElementById('stat-num-patents');
-      if(pill) pill.setAttribute('data-target', total);
-      if(num)  num.textContent = total;
+      var tot=base+nP.length;
+      var sp=document.getElementById('stat-pill-patents'),sn=document.getElementById('stat-num-patents');
+      if(sp)sp.setAttribute('data-target',tot);if(sn)sn.textContent=tot;
     }
   }
 
-  /* ---- PAPERS: prepend newest at top ---- */
-  var newPapers = loadDB('papers');
-  if(newPapers.length){
-    var pl = document.getElementById('dyn-papers');
+  /* PAPERS — prepend newest at top */
+  var nPap=loadDB('papers');
+  if(nPap.length){
+    var pl=document.getElementById('dyn-papers');
     if(pl){
-      // reverse so newest-last-added stays at top
-      newPapers.slice().reverse().forEach(function(p){
-        var item = document.createElement('div');
-        item.className = 'paper-item';
-        item.innerHTML =
-          '<span class="paper-year">'+esc(p.year)+'</span>'+
-          '<h3>'+esc(p.title)+'</h3>'+
-          '<span class="paper-journal">'+esc(p.journal)+(p.citation?' · '+esc(p.citation):'')+'</span>';
-        pl.insertBefore(item, pl.firstChild);
+      nPap.slice().reverse().forEach(function(p){
+        var item=document.createElement('div');item.className='paper-item';
+        item.innerHTML='<span class="paper-year">'+esc(p.year)+'</span><h3>'+esc(p.title)+'</h3><span class="paper-journal">'+esc(p.journal)+(p.citation?' · '+esc(p.citation):'')+'</span>';
+        pl.insertBefore(item,pl.firstChild);
       });
-      // Update papers stat counter
-      var paperTotal = pl.querySelectorAll('.paper-item').length;
-      var pp = document.getElementById('stat-pill-papers');
-      var pn = document.getElementById('stat-num-papers');
-      if(pp) pp.setAttribute('data-target', paperTotal);
-      if(pn) pn.textContent = paperTotal;
+      var pt=pl.querySelectorAll('.paper-item').length;
+      var pp=document.getElementById('stat-pill-papers'),pn=document.getElementById('stat-num-papers');
+      if(pp)pp.setAttribute('data-target',pt);if(pn)pn.textContent=pt;
     }
   }
 
-  /* ---- CONFERENCES: prepend at top ---- */
-  var newConfs = loadDB('conferences');
-  if(newConfs.length){
-    var cl = document.getElementById('dyn-conferences');
-    if(cl){
-      newConfs.slice().reverse().forEach(function(c){
-        var item = document.createElement('div');
-        item.className = 'conf-item';
-        item.innerHTML = '<h3>'+esc(c.title)+'</h3><p>'+esc(c.details)+'</p>';
-        cl.insertBefore(item, cl.firstChild);
-      });
-    }
-  }
+  /* CONFERENCES */
+  var nC=loadDB('conferences');
+  if(nC.length){var cl=document.getElementById('dyn-conferences');if(cl){nC.slice().reverse().forEach(function(c){var item=document.createElement('div');item.className='conf-item';item.innerHTML='<h3>'+esc(c.title)+'</h3><p>'+esc(c.details)+'</p>';cl.insertBefore(item,cl.firstChild);});}}
 
-  /* ---- BOOKS: append at end ---- */
-  var newBooks = loadDB('books');
-  if(newBooks.length){
-    var bg = document.getElementById('dyn-books');
+  /* BOOKS — append at end */
+  var nB=loadDB('books');
+  if(nB.length){
+    var bg=document.getElementById('dyn-books');
     if(bg){
-      newBooks.forEach(function(b){
-        var card = document.createElement('div');
-        card.className = 'book-card';
-        card.innerHTML =
-          '<div class="book-icon"><i class="fas fa-book-open"></i></div>'+
-          '<div><h3>'+esc(b.title)+'</h3>'+
-          '<p>'+esc(b.pub)+' · '+esc(b.date)+'</p>'+
-          (b.isbn?'<span class="book-isbn">ISBN: '+esc(b.isbn)+'</span>':'')+
-          '</div>';
-        bg.appendChild(card);
-      });
-      // Update books stat counter
-      var bookTotal = bg.querySelectorAll('.book-card').length;
-      var bp2 = document.getElementById('stat-pill-books');
-      var bn  = document.getElementById('stat-num-books');
-      if(bp2) bp2.setAttribute('data-target', bookTotal);
-      if(bn)  bn.textContent = bookTotal;
+      nB.forEach(function(b){var card=document.createElement('div');card.className='book-card';card.innerHTML='<div class="book-icon"><i class="fas fa-book-open"></i></div><div><h3>'+esc(b.title)+'</h3><p>'+esc(b.pub)+' · '+esc(b.date)+'</p>'+(b.isbn?'<span class="book-isbn">ISBN: '+esc(b.isbn)+'</span>':'')+'</div>';bg.appendChild(card);});
+      var bt=bg.querySelectorAll('.book-card').length;
+      var bp=document.getElementById('stat-pill-books'),bn=document.getElementById('stat-num-books');
+      if(bp)bp.setAttribute('data-target',bt);if(bn)bn.textContent=bt;
     }
   }
 
-  /* ---- AWARDS: append at end ---- */
-  var newAwards = loadDB('awards');
-  if(newAwards.length){
-    var ar = document.getElementById('dyn-awards');
-    if(ar){
-      newAwards.forEach(function(a){
-        var item = document.createElement('div');
-        item.className = 'award-item';
-        item.innerHTML =
-          '<div class="award-icon"><i class="fas fa-trophy"></i></div>'+
-          '<div><h3>'+esc(a.title)+'</h3>'+
-          '<p>'+esc(a.details)+'</p>'+
-          '<span>'+esc(a.date)+'</span></div>';
-        ar.appendChild(item);
-      });
-    }
-  }
+  /* AWARDS */
+  var nA=loadDB('awards');
+  if(nA.length){var ar=document.getElementById('dyn-awards');if(ar){nA.forEach(function(a){var item=document.createElement('div');item.className='award-item';item.innerHTML='<div class="award-icon"><i class="fas fa-trophy"></i></div><div><h3>'+esc(a.title)+'</h3><p>'+esc(a.details)+'</p><span>'+esc(a.date)+'</span></div>';ar.appendChild(item);});}}
 
-  /* ---- ACTIVITIES: prepend at top ---- */
-  var newActs = loadDB('activities');
-  if(newActs.length){
-    var al = document.getElementById('dyn-activities');
-    if(al){
-      newActs.slice().reverse().forEach(function(a){
-        var item = document.createElement('div');
-        item.className = 'activity-item';
-        item.innerHTML = '<strong>'+esc(a.title)+'</strong> '+esc(a.details);
-        al.insertBefore(item, al.firstChild);
-      });
-    }
-  }
+  /* ACTIVITIES */
+  var nAct=loadDB('activities');
+  if(nAct.length){var al=document.getElementById('dyn-activities');if(al){nAct.slice().reverse().forEach(function(a){var item=document.createElement('div');item.className='activity-item';item.innerHTML='<strong>'+esc(a.title)+'</strong> '+esc(a.details);al.insertBefore(item,al.firstChild);});}}
 
-  /* ---- WORKSHOPS: prepend at top ---- */
-  var newWS = loadDB('workshops');
-  if(newWS.length){
-    var wl = document.getElementById('dyn-workshops');
-    if(wl){
-      newWS.slice().reverse().forEach(function(w){
-        var item = document.createElement('div');
-        item.className = 'workshop-item';
-        item.innerHTML = '<strong>'+esc(w.title)+'</strong> — '+esc(w.details);
-        wl.insertBefore(item, wl.firstChild);
-      });
-    }
-  }
-
+  /* WORKSHOPS */
+  var nW=loadDB('workshops');
+  if(nW.length){var wl=document.getElementById('dyn-workshops');if(wl){nW.slice().reverse().forEach(function(w){var item=document.createElement('div');item.className='workshop-item';item.innerHTML='<strong>'+esc(w.title)+'</strong> — '+esc(w.details);wl.insertBefore(item,wl.firstChild);});}}
 })();
 
 /* ===================================================
-   MAIN SCRIPTS: navbar, typewriter, scroll, counters
+   MAIN SCRIPTS
    =================================================== */
-window.addEventListener('scroll',function(){
-  var nb=document.getElementById('navbar');
-  if(nb) nb.classList.toggle('scrolled',window.scrollY>60);
-});
-
+window.addEventListener('scroll',function(){var nb=document.getElementById('navbar');if(nb)nb.classList.toggle('scrolled',window.scrollY>60);});
 document.addEventListener('DOMContentLoaded',function(){
-  /* Typewriter */
   var tw=document.getElementById('typewriter');
-  var roles=['Vice Principal','Associate Professor','Researcher','Mentor & Educator'];
+  var roles=['Vice Principal','Assistant Professor','Researcher','Mentor & Educator'];
   var ri=0,ci=0,del=false;
-  function type(){
-    if(!tw)return;
-    var cur=roles[ri];
-    tw.textContent=del?cur.substring(0,ci-1):cur.substring(0,ci+1);
-    if(del)ci--;else ci++;
-    var sp=del?45:90;
-    if(!del&&ci===cur.length){sp=2200;del=true;}
-    else if(del&&ci===0){del=false;ri=(ri+1)%roles.length;sp=400;}
-    setTimeout(type,sp);
-  }
+  function type(){if(!tw)return;var cur=roles[ri];tw.textContent=del?cur.substring(0,ci-1):cur.substring(0,ci+1);if(del)ci--;else ci++;var sp=del?45:90;if(!del&&ci===cur.length){sp=2200;del=true;}else if(del&&ci===0){del=false;ri=(ri+1)%roles.length;sp=400;}setTimeout(type,sp);}
   setTimeout(type,600);
-
-  /* Mobile menu */
   var mb=document.getElementById('menu-btn'),nl=document.getElementById('nav-links');
-  if(mb&&nl){
-    mb.addEventListener('click',function(){nl.classList.toggle('open');mb.classList.toggle('open');});
-    nl.querySelectorAll('.nav-link').forEach(function(l){
-      l.addEventListener('click',function(){nl.classList.remove('open');mb.classList.remove('open');});
-    });
-  }
-
-  /* Scroll reveal */
+  if(mb&&nl){mb.addEventListener('click',function(){nl.classList.toggle('open');mb.classList.toggle('open');});nl.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){nl.classList.remove('open');mb.classList.remove('open');});});}
   var revs=document.querySelectorAll('.reveal');
   function checkReveal(){revs.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight-40)el.classList.add('active');});}
-  window.addEventListener('scroll',checkReveal);
-  setTimeout(checkReveal,100);
-
-  /* Stat counters — animate to whatever data-target is now set */
-  document.querySelectorAll('.stat-counter').forEach(function(c){
-    var t=parseInt(c.getAttribute('data-target'),10);
-    var n=c.querySelector('.stat-number');
-    if(!n)return;
-    var v=0,step=t/(1800/16);
-    function tick(){v+=step;if(v<t){n.textContent=Math.ceil(v);requestAnimationFrame(tick);}else{n.textContent=t;}}
-    setTimeout(tick,800);
-  });
-
-  /* Collapse: Experience */
+  window.addEventListener('scroll',checkReveal);setTimeout(checkReveal,100);
+  document.querySelectorAll('.stat-counter').forEach(function(c){var t=parseInt(c.getAttribute('data-target'),10);var n=c.querySelector('.stat-number');if(!n)return;var v=0,step=t/(1800/16);function tick(){v+=step;if(v<t){n.textContent=Math.ceil(v);requestAnimationFrame(tick);}else{n.textContent=t;}}setTimeout(tick,800);});
   var be=document.getElementById('show-more-exp'),me=document.getElementById('more-exp');
-  if(be&&me){
-    be.addEventListener('click',function(){
-      var o=me.style.display!=='none';
-      me.style.display=o?'none':'block';
-      be.classList.toggle('open',!o);
-      be.querySelector('span').textContent=o?'View Earlier Experience':'View Less';
-    });
-  }
-
-  /* Collapse: Patents */
+  if(be&&me){be.addEventListener('click',function(){var o=me.style.display!=='none';me.style.display=o?'none':'block';be.classList.toggle('open',!o);be.querySelector('span').textContent=o?'View Earlier Experience':'View Less';});}
   var bpp=document.getElementById('show-more-patents'),mpp=document.getElementById('more-patents');
-  if(bpp&&mpp){
-    bpp.addEventListener('click',function(){
-      var o=mpp.style.display!=='none';
-      mpp.style.display=o?'none':'grid';
-      bpp.classList.toggle('open',!o);
-      bpp.querySelector('span').textContent=o?'View 4 More Patents':'View Less';
-    });
-  }
-
-  /* Hero parallax */
+  if(bpp&&mpp){bpp.addEventListener('click',function(){var o=mpp.style.display!=='none';mpp.style.display=o?'none':'grid';bpp.classList.toggle('open',!o);bpp.querySelector('span').textContent=o?'View 4 More Patents':'View Less';});}
   var hn=document.querySelector('.hero-name');
-  if(hn){
-    document.addEventListener('mousemove',function(e){
-      hn.style.transform='translate('+((e.clientX/window.innerWidth-.5)*6)+'px,'+((e.clientY/window.innerHeight-.5)*4)+'px)';
-    });
-  }
+  if(hn){document.addEventListener('mousemove',function(e){hn.style.transform='translate('+((e.clientX/window.innerWidth-.5)*6)+'px,'+((e.clientY/window.innerHeight-.5)*4)+'px)';});}
 });
-
-function handleSubmit(e){
-  e.preventDefault();
-  var btn=e.target.querySelector('button[type="submit"]');
-  btn.textContent='Message Sent!';btn.style.background='#2D5A3F';btn.disabled=true;
-  setTimeout(function(){btn.innerHTML='Send Message <i class="fas fa-paper-plane"></i>';btn.style.background='';btn.disabled=false;e.target.reset();},3000);
-}
 </script>
 </body>
 </html>
