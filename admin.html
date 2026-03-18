@@ -23,7 +23,7 @@ html{font-size:16px}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
 h1,h2,h3{font-family:'Cormorant Garamond',serif}
 input,textarea,select{font-family:'DM Sans',sans-serif}
-
+ 
 /* ========= LOGIN SCREEN ========= */
 #login-screen{
   position:fixed;inset:0;background:var(--bg);
@@ -62,7 +62,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
 .login-back{text-align:center;margin-top:1.5rem}
 .login-back a{font-size:.8rem;color:var(--text-soft);transition:var(--tr)}
 .login-back a:hover{color:var(--gold)}
-
+ 
 /* ========= ADMIN PANEL ========= */
 #admin-panel{display:none}
 /* Sidebar */
@@ -203,31 +203,37 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(184,150,46,0.3);border-radius:3px}
 /* Mobile sidebar toggle */
 .sidebar-toggle{display:none;position:fixed;top:1rem;left:1rem;z-index:200;background:var(--bg2);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius);width:40px;height:40px;align-items:center;justify-content:center;cursor:pointer;color:var(--text)}
-/* Message cards */
-.msg-card{padding:1.4rem 1.6rem;border-bottom:1px solid rgba(255,255,255,0.04);transition:var(--tr);cursor:pointer}
-.msg-card:hover{background:rgba(255,255,255,0.03)}
-.msg-card.unread{background:rgba(184,150,46,0.06);border-left:3px solid var(--gold)}
-.msg-card.read{border-left:3px solid transparent}
-.msg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:1rem}
-.msg-sender{font-size:.92rem;font-weight:600;color:var(--ivory)}
-.msg-email{font-size:.75rem;color:var(--text-soft)}
-.msg-time{font-size:.72rem;color:var(--text-dim);white-space:nowrap;flex-shrink:0}
-.msg-body{font-size:.85rem;color:var(--text-soft);line-height:1.6}
-.msg-unread-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;display:inline-block;margin-right:.5rem;flex-shrink:0}
-.msg-actions{display:flex;gap:.5rem;margin-top:.8rem}
-.btn-msg-read{font-size:.72rem;padding:.25rem .7rem;background:rgba(184,150,46,0.12);border:1px solid rgba(184,150,46,0.25);color:var(--gold-light);border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
-.btn-msg-read:hover{background:rgba(184,150,46,0.25)}
-.btn-msg-del{font-size:.72rem;padding:.25rem .7rem;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.2);color:#E74C3C;border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
-.btn-msg-del:hover{background:rgba(192,57,43,0.25)}
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
   .main-content{margin-left:0}.sidebar-toggle{display:flex}
   .stats-row{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}
 }
+/* Message cards */
+.msg-card{padding:1.4rem 1.6rem;border-bottom:1px solid rgba(255,255,255,0.04);transition:var(--tr)}
+.msg-card.unread{background:rgba(184,150,46,0.06);border-left:3px solid var(--gold)}
+.msg-card.read{border-left:3px solid transparent}
+.msg-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.5rem;gap:1rem}
+.msg-sender{font-size:.92rem;font-weight:600;color:var(--ivory)}
+.msg-email{font-size:.75rem;color:var(--text-soft)}
+.msg-time{font-size:.72rem;color:var(--text-dim);white-space:nowrap;flex-shrink:0}
+.msg-body{font-size:.85rem;color:var(--text-soft);line-height:1.6}
+.msg-unread-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;display:inline-block;margin-right:.4rem;flex-shrink:0;margin-top:4px}
+.msg-actions{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap}
+.btn-msg-read{font-size:.72rem;padding:.25rem .7rem;background:rgba(184,150,46,0.12);border:1px solid rgba(184,150,46,0.25);color:var(--gold-light);border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
+.btn-msg-read:hover{background:rgba(184,150,46,0.25)}
+.btn-msg-del{font-size:.72rem;padding:.25rem .7rem;background:rgba(192,57,43,0.12);border:1px solid rgba(192,57,43,0.2);color:#E74C3C;border-radius:var(--radius);cursor:pointer;transition:var(--tr)}
+.btn-msg-del:hover{background:rgba(192,57,43,0.25)}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-
+ 
+<!-- Cloud Loader Overlay -->
+<div id="cloud-loader" style="display:none;position:fixed;inset:0;background:rgba(14,26,20,0.88);z-index:99999;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem">
+  <div style="width:48px;height:48px;border:3px solid rgba(184,150,46,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite"></div>
+  <p style="color:var(--gold-light);font-size:.9rem;letter-spacing:.06em;font-family:'DM Sans',sans-serif">Loading...</p>
+</div>
+ 
 <!-- Login Screen -->
 <div id="login-screen">
   <div class="login-box">
@@ -249,7 +255,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
     <div class="login-back"><a href="index.html"><i class="fas fa-arrow-left"></i> Back to Portfolio</a></div>
   </div>
 </div>
-
+ 
 <!-- Delete Confirm Modal -->
 <div class="modal-overlay" id="del-modal">
   <div class="modal-box">
@@ -261,7 +267,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
     </div>
   </div>
 </div>
-
+ 
 <!-- Edit Modal -->
 <div class="edit-modal-overlay" id="edit-modal">
   <div class="edit-modal-box">
@@ -274,10 +280,10 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
     </div>
   </div>
 </div>
-
+ 
 <!-- Toast -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Done!</span></div>
-
+ 
 <!-- Admin Panel -->
 <div id="admin-panel">
   <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
@@ -297,23 +303,23 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
       <nav class="sidebar-nav">
         <div class="nav-section-label">Overview</div>
         <div class="sidebar-link active" onclick="showPanel('dashboard')"><i class="fas fa-th-large"></i> Dashboard</div>
-        <div class="sidebar-link" onclick="showPanel('messages')"><i class="fas fa-envelope"></i> Messages <span class="badge" id="b-messages" style="background:var(--red)">0</span></div>
-
+        <div class="sidebar-link" onclick="showPanel('messages')"><i class="fas fa-envelope"></i> Messages <span class="badge" id="b-messages" style="background:var(--red);display:none">0</span></div>
+ 
         <div class="nav-section-label">Academic</div>
         <div class="sidebar-link" onclick="showPanel('education')"><i class="fas fa-graduation-cap"></i> Education</div>
         <div class="sidebar-link" onclick="showPanel('experience')"><i class="fas fa-briefcase"></i> Experience</div>
-
+ 
         <div class="nav-section-label">Research</div>
         <div class="sidebar-link" onclick="showPanel('patents')"><i class="fas fa-certificate"></i> Patents <span class="badge" id="b-patents">0</span></div>
         <div class="sidebar-link" onclick="showPanel('papers')"><i class="fas fa-file-alt"></i> Journal Papers <span class="badge" id="b-papers">0</span></div>
         <div class="sidebar-link" onclick="showPanel('conferences')"><i class="fas fa-chalkboard-teacher"></i> Conferences <span class="badge" id="b-conferences">0</span></div>
         <div class="sidebar-link" onclick="showPanel('books')"><i class="fas fa-book"></i> Books <span class="badge" id="b-books">0</span></div>
-
+ 
         <div class="nav-section-label">Achievements</div>
         <div class="sidebar-link" onclick="showPanel('awards')"><i class="fas fa-trophy"></i> Awards <span class="badge" id="b-awards">0</span></div>
         <div class="sidebar-link" onclick="showPanel('activities')"><i class="fas fa-star"></i> Professional Activities <span class="badge" id="b-activities">0</span></div>
         <div class="sidebar-link" onclick="showPanel('workshops')"><i class="fas fa-tools"></i> Workshops & FDPs <span class="badge" id="b-workshops">0</span></div>
-
+ 
         <div class="nav-section-label">More</div>
         <div class="sidebar-link" onclick="showPanel('skills')"><i class="fas fa-code"></i> Skills</div>
         <div class="sidebar-link" onclick="showPanel('memberships')"><i class="fas fa-id-badge"></i> Memberships</div>
@@ -325,7 +331,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
         <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
       </div>
     </aside>
-
+ 
     <!-- Main -->
     <main class="main-content">
       <div class="topbar">
@@ -337,9 +343,9 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
           <a href="index.html" class="view-site-btn" target="_blank"><i class="fas fa-external-link-alt"></i> View Portfolio</a>
         </div>
       </div>
-
+ 
       <div class="page-content">
-
+ 
         <!-- ===== DASHBOARD ===== -->
         <div class="section-panel active" id="panel-dashboard">
           <div class="welcome-banner">
@@ -360,7 +366,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             </div>
           </div>
         </div>
-
+ 
         <!-- ===== PATENTS ===== -->
         <div class="section-panel" id="panel-patents">
           <div class="add-form-card">
@@ -380,7 +386,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-patents"></div>
           </div>
         </div>
-
+ 
         <!-- ===== JOURNAL PAPERS ===== -->
         <div class="section-panel" id="panel-papers">
           <div class="add-form-card">
@@ -401,7 +407,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-papers"></div>
           </div>
         </div>
-
+ 
         <!-- ===== CONFERENCES ===== -->
         <div class="section-panel" id="panel-conferences">
           <div class="add-form-card">
@@ -420,7 +426,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-conferences"></div>
           </div>
         </div>
-
+ 
         <!-- ===== BOOKS ===== -->
         <div class="section-panel" id="panel-books">
           <div class="add-form-card">
@@ -441,7 +447,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-books"></div>
           </div>
         </div>
-
+ 
         <!-- ===== AWARDS ===== -->
         <div class="section-panel" id="panel-awards">
           <div class="add-form-card">
@@ -461,7 +467,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-awards"></div>
           </div>
         </div>
-
+ 
         <!-- ===== PROFESSIONAL ACTIVITIES ===== -->
         <div class="section-panel" id="panel-activities">
           <div class="add-form-card">
@@ -480,7 +486,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-activities"></div>
           </div>
         </div>
-
+ 
         <!-- ===== WORKSHOPS ===== -->
         <div class="section-panel" id="panel-workshops">
           <div class="add-form-card">
@@ -499,7 +505,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-workshops"></div>
           </div>
         </div>
-
+ 
         <!-- ===== EDUCATION ===== -->
         <div class="section-panel" id="panel-education">
           <div class="add-form-card">
@@ -521,7 +527,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-education"></div>
           </div>
         </div>
-
+ 
         <!-- ===== EXPERIENCE ===== -->
         <div class="section-panel" id="panel-experience">
           <div class="add-form-card">
@@ -542,7 +548,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-experience"></div>
           </div>
         </div>
-
+ 
         <!-- ===== SKILLS ===== -->
         <div class="section-panel" id="panel-skills">
           <div class="add-form-card">
@@ -567,7 +573,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-skills"></div>
           </div>
         </div>
-
+ 
         <!-- ===== MEMBERSHIPS ===== -->
         <div class="section-panel" id="panel-memberships">
           <div class="add-form-card">
@@ -586,7 +592,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-memberships"></div>
           </div>
         </div>
-
+ 
         <!-- ===== SUBJECTS ===== -->
         <div class="section-panel" id="panel-subjects">
           <div class="add-form-card">
@@ -604,7 +610,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-subjects"></div>
           </div>
         </div>
-
+ 
         <!-- ===== COMMUNITY ===== -->
         <div class="section-panel" id="panel-community">
           <div class="add-form-card">
@@ -623,7 +629,7 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div class="entries-list" id="list-community"></div>
           </div>
         </div>
-
+ 
         <!-- ===== HERO STATS ===== -->
         <div class="section-panel" id="panel-stats">
           <div class="add-form-card">
@@ -645,36 +651,391 @@ input,textarea,select{font-family:'DM Sans',sans-serif}
             <div id="stats-code-output" style="margin-top:1rem;background:var(--bg3);padding:1rem;border-radius:var(--radius);font-family:monospace;font-size:.8rem;color:var(--gold-pale);white-space:pre-wrap;display:none"></div>
           </div>
         </div>
-
+ 
+        </div>
+ 
         <!-- ===== MESSAGES ===== -->
         <div class="section-panel" id="panel-messages">
           <div class="entries-card">
             <div class="entries-header">
-              <h3><i class="fas fa-envelope"></i> Inbox <span class="entry-count" id="c-messages">0 messages</span></h3>
-              <button onclick="markAllRead()" style="background:rgba(184,150,46,0.15);border:1px solid rgba(184,150,46,0.3);color:var(--gold-light);font-size:.75rem;padding:.3rem .9rem;border-radius:var(--radius);cursor:pointer;">
-                <i class="fas fa-check-double"></i> Mark all read
-              </button>
+              <h3><i class="fas fa-envelope"></i> Inbox &nbsp;<span class="entry-count" id="c-messages">0 messages</span></h3>
+              <button onclick="markAllRead()" style="background:rgba(184,150,46,0.12);border:1px solid rgba(184,150,46,0.3);color:var(--gold-light);font-size:.75rem;padding:.35rem 1rem;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:.4rem"><i class="fas fa-check-double"></i> Mark all read</button>
             </div>
             <div class="entries-list" id="list-messages"></div>
           </div>
         </div>
-
+ 
       </div><!-- end page-content -->
     </main>
   </div>
 </div>
-
+ 
 <script>
 // ============================================================
-//   DR. MSS PORTFOLIO — ADMIN CMS
+//   DR. MSS PORTFOLIO — ADMIN CMS (CLOUD POWERED)
 // ============================================================
-
+ 
 var ADMIN = { name:'Sathya', pass:'m.sathya@123' };
-
+ 
+/* ---- JSONBIN CLOUD CONFIG ---- */
+var BIN_ID  = '69bab577c3097a1dd537ea09';
+var API_KEY = '$2a$10$5uNxIwnU1IwDKd.AjJFh8egNjrU1465BgAUB/fr/AKNLYQaLu.upC';
+var BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+ 
+/* In-memory DB */
+var DB = {
+  patents:[], papers:[], conferences:[], books:[],
+  awards:[], activities:[], workshops:[], education:[],
+  experience:[], skills:[], memberships:[], subjects:[], community:[]
+};
+var MSGS = [];
+var _saving = false;
+ 
+/* ---- LOADER OVERLAY ---- */
+function showLoader(msg){
+  var l=document.getElementById('cloud-loader');
+  if(l){l.querySelector('p').textContent=msg||'Syncing...';l.style.display='flex';}
+}
+function hideLoader(){
+  var l=document.getElementById('cloud-loader');
+  if(l)l.style.display='none';
+}
+ 
+/* ---- CLOUD LOAD ---- */
+function cloudLoad(callback){
+  showLoader('Loading your data from cloud...');
+  fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}})
+  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  .then(function(data){
+    Object.keys(DB).forEach(function(k){if(Array.isArray(data[k]))DB[k]=data[k];});
+    if(Array.isArray(data.messages))MSGS=data.messages;
+    hideLoader();
+    if(callback)callback();
+  })
+  .catch(function(err){
+    hideLoader();
+    console.warn('Cloud load failed, using localStorage fallback:',err);
+    Object.keys(DB).forEach(function(k){try{var v=localStorage.getItem('mss_'+k);if(v)DB[k]=JSON.parse(v);}catch(e){}});
+    try{var v=localStorage.getItem('mss_messages');if(v)MSGS=JSON.parse(v);}catch(e){}
+    if(callback)callback();
+    showToast('Using local data (cloud unavailable)','error');
+  });
+}
+ 
+/* ---- CLOUD SAVE ---- */
+function cloudSave(callback){
+  if(_saving){setTimeout(function(){if(callback)callback();},400);return;}
+  _saving=true;
+  var data={};
+  Object.keys(DB).forEach(function(k){data[k]=DB[k];});
+  data.messages=MSGS;
+  /* Always backup locally */
+  Object.keys(DB).forEach(function(k){try{localStorage.setItem('mss_'+k,JSON.stringify(DB[k]));}catch(e){}});
+  try{localStorage.setItem('mss_messages',JSON.stringify(MSGS));}catch(e){}
+  fetch(BIN_URL,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},
+    body:JSON.stringify(data)
+  })
+  .then(function(){_saving=false;if(callback)callback();})
+  .catch(function(err){
+    _saving=false;
+    console.warn('Cloud save failed:',err);
+    if(callback)callback();
+  });
+}
+ 
+/* Legacy helpers */
+function save(key,val){try{localStorage.setItem('mss_'+key,JSON.stringify(val));}catch(e){}}
+function load(key,def){try{var v=localStorage.getItem('mss_'+key);return v?JSON.parse(v):def;}catch(e){return def;}}
+ 
+/* ---- LOGIN ---- */
+function doLogin(){
+  var u=document.getElementById('login-user').value.trim();
+  var p=document.getElementById('login-pass').value;
+  var err=document.getElementById('login-error');
+  if(u===ADMIN.name && p===ADMIN.pass){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    err.style.display='none';
+    cloudLoad(function(){initAdmin();});
+  } else {
+    err.style.display='block';
+    document.getElementById('login-pass').value='';
+    document.getElementById('login-pass').focus();
+    document.getElementById('login-pass').style.borderColor='var(--red-light)';
+    setTimeout(function(){document.getElementById('login-pass').style.borderColor='';},1500);
+  }
+}
+function doLogout(){
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+}
+ 
+/* ---- INIT ---- */
+function initAdmin(){
+  updateClock();setInterval(updateClock,60000);
+  renderAll();
+  renderMessages();
+  buildDashboard();
+  var s=load('stats',{years:13,patents:9,papers:24,books:4});
+  document.getElementById('stat-years').value=s.years;
+  document.getElementById('stat-patents').value=s.patents;
+  document.getElementById('stat-papers').value=s.papers;
+  document.getElementById('stat-books').value=s.books;
+}
+function updateClock(){
+  var now=new Date();
+  var h=now.getHours(),m=now.getMinutes(),ampm=h>=12?'PM':'AM';
+  h=h%12||12;m=m<10?'0'+m:m;
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('current-time').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+' · '+h+':'+m+' '+ampm;
+}
+ 
+/* ---- PANEL NAVIGATION ---- */
+var panelTitles={
+  dashboard:'Dashboard',messages:'Messages',patents:'Patents',papers:'Journal Publications',
+  conferences:'Conference Papers',books:'Books Published',awards:'Awards & Recognition',
+  activities:'Professional Activities',workshops:'Workshops & FDPs',
+  education:'Education',experience:'Experience',skills:'Skills',
+  memberships:'Memberships',subjects:'Subjects',community:'Community',stats:'Hero Stats'
+};
+function showPanel(name){
+  document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.sidebar-link').forEach(function(l){l.classList.remove('active');});
+  var panel=document.getElementById('panel-'+name);
+  if(panel)panel.classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(function(l){
+    if(l.getAttribute('onclick')&&l.getAttribute('onclick').indexOf("'"+name+"'")>-1)l.classList.add('active');
+  });
+  document.getElementById('topbar-heading').textContent=panelTitles[name]||name;
+  document.getElementById('topbar-sub').textContent='Manage your '+panelTitles[name];
+  if(name==='messages')renderMessages();
+  if(window.innerWidth<=900)closeSidebar();
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');}
+ 
+/* ---- RENDER ALL ---- */
+function renderAll(){
+  Object.keys(DB).forEach(function(key){renderList(key);});
+  updateBadges();
+  buildDashboard();
+}
+ 
+/* ---- RENDER LIST ---- */
+var sectionConfig={
+  patents:    {fields:['title','appno','date'],labels:['Title','App. No.','Date'],title:'title',meta:function(e){return e.appno+' · '+e.date;}},
+  papers:     {fields:['title','year','journal','citation'],labels:['Title','Year','Journal','Citation'],title:'title',meta:function(e){return e.year+' · '+e.journal;}},
+  conferences:{fields:['title','details'],labels:['Title','Details'],title:'title',meta:function(e){return e.details;}},
+  books:      {fields:['title','pub','date','isbn'],labels:['Title','Publisher','Date','ISBN'],title:'title',meta:function(e){return e.pub+' · '+e.date;}},
+  awards:     {fields:['title','details','date'],labels:['Award','Details','Date'],title:'title',meta:function(e){return e.details+' · '+e.date;}},
+  activities: {fields:['title','details'],labels:['Activity','Details'],title:'title',meta:function(e){return e.details;}},
+  workshops:  {fields:['title','details'],labels:['Workshop','Details'],title:'title',meta:function(e){return e.details;}},
+  education:  {fields:['deg','uni','year','col','grade'],labels:['Degree','University','Year','Institution','Grade'],title:'deg',meta:function(e){return e.uni+' · '+e.year;}},
+  experience: {fields:['role','inst','from','to'],labels:['Role','Institution','From','To'],title:'role',meta:function(e){return e.inst+' · '+e.from+' – '+e.to;}},
+  skills:     {fields:['name','cat'],labels:['Skill','Category'],title:'name',meta:function(e){return e.cat;}},
+  memberships:{fields:['org','detail'],labels:['Organisation','Details'],title:'org',meta:function(e){return e.detail;}},
+  subjects:   {fields:['name'],labels:['Subject'],title:'name',meta:function(){return '';}},
+  community:  {fields:['title','desc'],labels:['Activity','Description'],title:'title',meta:function(e){return e.desc;}},
+};
+function renderList(key){
+  var list=document.getElementById('list-'+key);
+  var count=document.getElementById('c-'+key);
+  if(!list)return;
+  var entries=DB[key];
+  if(count)count.textContent=entries.length+' '+(entries.length===1?'entry':'entries');
+  if(entries.length===0){list.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet. Add your first one above.</p></div>';return;}
+  var cfg=sectionConfig[key];
+  var html='';
+  for(var i=entries.length-1;i>=0;i--){
+    var e=entries[i];var title=e[cfg.title]||'(no title)';var meta=cfg.meta(e);
+    html+='<div class="entry-item"><div class="entry-dot"></div><div class="entry-body"><div class="entry-title">'+escHtml(title)+'</div>';
+    if(meta)html+='<div class="entry-meta">'+escHtml(meta)+'</div>';
+    html+='</div><div class="entry-actions"><button class="btn-edit" onclick="openEdit(\''+key+'\','+i+')" title="Edit"><i class="fas fa-edit"></i></button><button class="btn-delete" onclick="askDelete(\''+key+'\','+i+')" title="Delete"><i class="fas fa-trash"></i></button></div></div>';
+  }
+  list.innerHTML=html;
+}
+ 
+/* ---- ADD ENTRY ---- */
+var fieldMap={
+  patents:     ['pat-title','pat-appno','pat-date'],
+  papers:      ['pap-title','pap-year','pap-journal','pap-citation'],
+  conferences: ['conf-title','conf-details'],
+  books:       ['book-title','book-pub','book-date','book-isbn'],
+  awards:      ['awd-title','awd-details','awd-date'],
+  activities:  ['act-title','act-details'],
+  workshops:   ['ws-title','ws-details'],
+  education:   ['edu-deg','edu-uni','edu-year','edu-col','edu-grade'],
+  experience:  ['exp-role','exp-inst','exp-from','exp-to'],
+  skills:      ['skl-name','skl-cat'],
+  memberships: ['mem-org','mem-detail'],
+  subjects:    ['sub-name'],
+  community:   ['com-title','com-desc'],
+};
+function addEntry(key){
+  var ids=fieldMap[key];var cfg=sectionConfig[key];var entry={};var valid=true;
+  for(var i=0;i<ids.length;i++){
+    var el=document.getElementById(ids[i]);if(!el)continue;
+    var fieldKey=cfg.fields[i];entry[fieldKey]=el.value.trim();
+    if(i===0&&!entry[fieldKey]){el.style.borderColor='var(--red-light)';setTimeout(function(e){e.style.borderColor='';}(el),1500);valid=false;}
+  }
+  if(!valid){showToast('Please fill in the required fields.','error');return;}
+  DB[key].push(entry);
+  showToast('Saving to cloud...');
+  cloudSave(function(){
+    clearForm(key);renderList(key);updateBadges();buildDashboard();
+    showToast('✓ Saved! Visible on all devices now.');
+  });
+}
+function clearForm(key){
+  var ids=fieldMap[key];if(!ids)return;
+  ids.forEach(function(id){var el=document.getElementById(id);if(el){el.value=el.tagName==='SELECT'?el.options[0].value:'';}});
+}
+ 
+/* ---- DELETE ---- */
+var _delKey='',_delIdx=-1;
+function askDelete(key,idx){_delKey=key;_delIdx=idx;document.getElementById('del-modal').classList.add('show');}
+function closeDelModal(){document.getElementById('del-modal').classList.remove('show');}
+function confirmDelete(){
+  if(_delKey&&_delIdx>=0){
+    DB[_delKey].splice(_delIdx,1);
+    cloudSave(function(){renderList(_delKey);updateBadges();buildDashboard();showToast('Deleted & synced.');});
+  }
+  closeDelModal();
+}
+ 
+/* ---- EDIT ---- */
+var _editKey='',_editIdx=-1;
+function openEdit(key,idx){
+  _editKey=key;_editIdx=idx;var entry=DB[key][idx];var cfg=sectionConfig[key];
+  var html='<div class="form-grid">';
+  cfg.fields.forEach(function(field,i){
+    var label=cfg.labels[i];var val=entry[field]||'';
+    var isLong=(field==='title'&&val.length>60)||field==='details'||field==='desc'||field==='citation';
+    html+='<div class="form-field'+(isLong?' span2':'')+'"><label>'+escHtml(label)+'</label>';
+    if(isLong){html+='<textarea id="ef-'+field+'" rows="3">'+escHtml(val)+'</textarea>';}
+    else{html+='<input type="text" id="ef-'+field+'" value="'+escHtml(val)+'">';}
+    html+='</div>';
+  });
+  html+='</div>';
+  document.getElementById('edit-modal-fields').innerHTML=html;
+  document.getElementById('edit-modal').classList.add('show');
+}
+function closeEditModal(){document.getElementById('edit-modal').classList.remove('show');}
+function saveEdit(){
+  if(_editKey===''||_editIdx<0)return;
+  var cfg=sectionConfig[_editKey];var entry=DB[_editKey][_editIdx];
+  cfg.fields.forEach(function(field){var el=document.getElementById('ef-'+field);if(el)entry[field]=el.value.trim();});
+  DB[_editKey][_editIdx]=entry;
+  cloudSave(function(){renderList(_editKey);updateBadges();buildDashboard();closeEditModal();showToast('Updated & synced!');});
+}
+ 
+/* ---- MESSAGES ---- */
+function renderMessages(){
+  MSGS=JSON.parse(localStorage.getItem('mss_messages')||'[]');
+  // Also merge from cloud DB if available
+  cloudLoad(function(){
+    var list=document.getElementById('list-messages');
+    var count=document.getElementById('c-messages');
+    if(!list)return;
+    if(count)count.textContent=MSGS.length+' '+(MSGS.length===1?'message':'messages');
+    if(MSGS.length===0){
+      list.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet.</p></div>';
+      updateBadges();return;
+    }
+    var html='';
+    var sorted=MSGS.slice().sort(function(a,b){return b.id-a.id;});
+    sorted.forEach(function(m){
+      html+='<div class="msg-card '+(m.read?'read':'unread')+'">';
+      html+='<div class="msg-header"><div style="display:flex;align-items:center;gap:.5rem">';
+      if(!m.read)html+='<span class="msg-unread-dot"></span>';
+      html+='<div><div class="msg-sender">'+escHtml(m.name)+'</div><div class="msg-email">'+escHtml(m.email)+'</div></div>';
+      html+='</div><div class="msg-time">'+escHtml(m.time)+'</div></div>';
+      html+='<div class="msg-body">'+escHtml(m.msg)+'</div>';
+      html+='<div class="msg-actions">';
+      if(!m.read)html+='<button class="btn-msg-read" onclick="markRead('+m.id+')"><i class="fas fa-check"></i> Mark read</button>';
+      html+='<button class="btn-msg-del" onclick="deleteMsg('+m.id+')"><i class="fas fa-trash"></i> Delete</button>';
+      html+='<a href="mailto:'+escHtml(m.email)+'" class="btn-msg-read" style="text-decoration:none"><i class="fas fa-reply"></i> Reply</a>';
+      html+='</div></div>';
+    });
+    list.innerHTML=html;
+    updateBadges();
+  });
+}
+function markRead(id){
+  MSGS.forEach(function(m){if(m.id===id)m.read=true;});
+  cloudSave(function(){renderMessages();});
+}
+function markAllRead(){
+  MSGS.forEach(function(m){m.read=true;});
+  cloudSave(function(){renderMessages();showToast('All marked as read.');});
+}
+function deleteMsg(id){
+  MSGS=MSGS.filter(function(m){return m.id!==id;});
+  cloudSave(function(){renderMessages();showToast('Message deleted.');});
+}
+ 
+/* ---- STATS ---- */
+function saveStats(){
+  var s={
+    years:parseInt(document.getElementById('stat-years').value)||13,
+    patents:parseInt(document.getElementById('stat-patents').value)||9,
+    papers:parseInt(document.getElementById('stat-papers').value)||24,
+    books:parseInt(document.getElementById('stat-books').value)||4,
+  };
+  save('stats',s);
+  var out=document.getElementById('stats-code-output');
+  out.textContent='Stats saved! Update data-target values in index.html:\nYears: '+s.years+'\nPatents: '+s.patents+'\nPapers: '+s.papers+'\nBooks: '+s.books;
+  out.style.display='block';
+  showToast('Stats saved!');
+}
+ 
+/* ---- BADGES & DASHBOARD ---- */
+var badgeKeys=['patents','papers','conferences','books','awards','activities','workshops'];
+function updateBadges(){
+  badgeKeys.forEach(function(k){var b=document.getElementById('b-'+k);if(b)b.textContent=DB[k].length;});
+  var unread=MSGS.filter(function(m){return !m.read;}).length;
+  var bm=document.getElementById('b-messages');
+  if(bm){bm.textContent=unread;bm.style.display=unread>0?'':'none';}
+}
+var dashIcons={patents:'certificate',papers:'file-alt',conferences:'chalkboard-teacher',books:'book',awards:'trophy',activities:'star',workshops:'tools'};
+var dashColors={patents:'#B8962E',papers:'#2D5A3F',conferences:'#6c3483',books:'#1a5276',awards:'#c0392b',activities:'#1a6b3a',workshops:'#935116'};
+function buildDashboard(){
+  var html='';
+  Object.keys(dashIcons).forEach(function(k){
+    var count=DB[k].length;
+    html+='<div class="stat-card" onclick="showPanel(\''+k+'\')" style="cursor:pointer">';
+    html+='<div class="stat-card-icon" style="background:'+dashColors[k]+'22;color:'+dashColors[k]+'"><i class="fas fa-'+dashIcons[k]+'"></i></div>';
+    html+='<h3>'+count+'</h3><p>'+(panelTitles[k]||k)+'</p></div>';
+  });
+  document.getElementById('dashboard-stats').innerHTML=html;
+}
+ 
+/* ---- TOAST ---- */
+function showToast(msg,type){
+  var t=document.getElementById('toast');var m=document.getElementById('toast-msg');
+  m.textContent=msg;t.className='toast'+(type==='error'?' error':'');
+  setTimeout(function(){t.classList.add('show');},10);
+  setTimeout(function(){t.classList.remove('show');},3500);
+}
+ 
+/* ---- HTML ESCAPE ---- */
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+ 
+/* ---- ENTER KEY ON LOGIN ---- */
+document.getElementById('login-user').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-pass').focus();});
+</script>
+</body>
+</html>
+ 
 // Storage helper
 function save(key,val){ try{localStorage.setItem('mss_'+key,JSON.stringify(val));}catch(e){} }
 function load(key,def){ try{var v=localStorage.getItem('mss_'+key);return v?JSON.parse(v):def;}catch(e){return def;} }
-
+ 
 // Data store — all sections
 var DB = {
   patents:    load('patents',[]),
@@ -691,9 +1052,7 @@ var DB = {
   subjects:   load('subjects',[]),
   community:  load('community',[]),
 };
-// Messages stored separately (not via addEntry)
-var MSGS = load('messages',[]);
-
+ 
 // ---- LOGIN ----
 function doLogin(){
   var u=document.getElementById('login-user').value.trim();
@@ -718,12 +1077,11 @@ function doLogout(){
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
 }
-
+ 
 // ---- INIT ----
 function initAdmin(){
   updateClock();setInterval(updateClock,60000);
   renderAll();
-  renderMessages();
   buildDashboard();
   // Load stats into fields
   var s=load('stats',{years:13,patents:9,papers:24,books:4});
@@ -740,10 +1098,10 @@ function updateClock(){
   var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   document.getElementById('current-time').textContent=days[now.getDay()]+', '+months[now.getMonth()]+' '+now.getDate()+' · '+h+':'+m+' '+ampm;
 }
-
+ 
 // ---- PANEL NAVIGATION ----
 var panelTitles={
-  dashboard:'Dashboard',messages:'Messages',patents:'Patents',papers:'Journal Publications',
+  dashboard:'Dashboard',patents:'Patents',papers:'Journal Publications',
   conferences:'Conference Papers',books:'Books Published',awards:'Awards & Recognition',
   activities:'Professional Activities',workshops:'Workshops & FDPs',
   education:'Education',experience:'Experience',skills:'Skills',
@@ -759,19 +1117,18 @@ function showPanel(name){
   });
   document.getElementById('topbar-heading').textContent=panelTitles[name]||name;
   document.getElementById('topbar-sub').textContent='Manage your '+panelTitles[name];
-  if(name==='messages') renderMessages(); // always refresh inbox
   if(window.innerWidth<=900) closeSidebar();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');}
-
+ 
 // ---- RENDER ALL ----
 function renderAll(){
   Object.keys(DB).forEach(function(key){renderList(key);});
   updateBadges();
   buildDashboard();
 }
-
+ 
 // ---- RENDER LIST ----
 var sectionConfig = {
   patents:    {fields:['title','appno','date'], labels:['Title','App. No.','Date'], title:'title', meta:function(e){return e.appno+' · '+e.date;}},
@@ -817,7 +1174,7 @@ function renderList(key){
   }
   list.innerHTML=html;
 }
-
+ 
 // ---- ADD ENTRY ----
 var fieldMap={
   patents:     ['pat-title','pat-appno','pat-date'],
@@ -865,7 +1222,7 @@ function clearForm(key){
   if(!ids) return;
   ids.forEach(function(id){var el=document.getElementById(id);if(el){el.value=el.tagName==='SELECT'?el.options[0].value:'';}});
 }
-
+ 
 // ---- DELETE ----
 var _delKey='',_delIdx=-1;
 function askDelete(key,idx){
@@ -884,7 +1241,7 @@ function confirmDelete(){
   }
   closeDelModal();
 }
-
+ 
 // ---- EDIT ----
 var _editKey='',_editIdx=-1;
 function openEdit(key,idx){
@@ -926,7 +1283,7 @@ function saveEdit(){
   closeEditModal();
   showToast('Entry updated!');
 }
-
+ 
 // ---- STATS ----
 function saveStats(){
   var s={
@@ -942,7 +1299,7 @@ function saveStats(){
   out.textContent=code;out.style.display='block';
   showToast('Stats saved! See code below to update index.html');
 }
-
+ 
 // ---- BADGES & DASHBOARD ----
 var badgeKeys=['patents','papers','conferences','books','awards','activities','workshops'];
 function updateBadges(){
@@ -950,63 +1307,6 @@ function updateBadges(){
     var b=document.getElementById('b-'+k);
     if(b) b.textContent=DB[k].length;
   });
-  // Message badge shows UNREAD count
-  var unread=MSGS.filter(function(m){return !m.read;}).length;
-  var bm=document.getElementById('b-messages');
-  if(bm){bm.textContent=unread;bm.style.display=unread>0?'':'none';}
-}
-
-// ---- MESSAGES ----
-function renderMessages(){
-  MSGS = load('messages',[]);
-  var list=document.getElementById('list-messages');
-  var count=document.getElementById('c-messages');
-  if(!list) return;
-  if(count) count.textContent=MSGS.length+' '+(MSGS.length===1?'message':'messages');
-  if(MSGS.length===0){
-    list.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No messages yet. They will appear here when someone contacts you.</p></div>';
-    updateBadges();return;
-  }
-  var html='';
-  // Show newest first
-  var sorted=MSGS.slice().sort(function(a,b){return b.id-a.id;});
-  sorted.forEach(function(m){
-    html+='<div class="msg-card '+(m.read?'read':'unread')+'">';
-    html+='<div class="msg-header">';
-    html+='<div style="display:flex;align-items:center;gap:.5rem">';
-    if(!m.read) html+='<span class="msg-unread-dot"></span>';
-    html+='<div><div class="msg-sender">'+escHtml(m.name)+'</div><div class="msg-email">'+escHtml(m.email)+'</div></div>';
-    html+='</div><div class="msg-time">'+escHtml(m.time)+'</div>';
-    html+='</div>';
-    html+='<div class="msg-body">'+escHtml(m.msg)+'</div>';
-    html+='<div class="msg-actions">';
-    if(!m.read) html+='<button class="btn-msg-read" onclick="markRead('+m.id+')"><i class="fas fa-check"></i> Mark read</button>';
-    html+='<button class="btn-msg-del" onclick="deleteMsg('+m.id+')"><i class="fas fa-trash"></i> Delete</button>';
-    html+='<a href="mailto:'+escHtml(m.email)+'?subject=Re: Your message" class="btn-msg-read" style="text-decoration:none"><i class="fas fa-reply"></i> Reply</a>';
-    html+='</div></div>';
-  });
-  list.innerHTML=html;
-  updateBadges();
-}
-function markRead(id){
-  MSGS=load('messages',[]);
-  MSGS.forEach(function(m){if(m.id===id)m.read=true;});
-  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
-  renderMessages();
-}
-function markAllRead(){
-  MSGS=load('messages',[]);
-  MSGS.forEach(function(m){m.read=true;});
-  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
-  renderMessages();
-  showToast('All messages marked as read.');
-}
-function deleteMsg(id){
-  MSGS=load('messages',[]);
-  MSGS=MSGS.filter(function(m){return m.id!==id;});
-  localStorage.setItem('mss_messages',JSON.stringify(MSGS));
-  renderMessages();
-  showToast('Message deleted.');
 }
 var dashIcons={patents:'certificate',papers:'file-alt',conferences:'chalkboard-teacher',books:'book',awards:'trophy',activities:'star',workshops:'tools'};
 var dashColors={patents:'#B8962E',papers:'#2D5A3F',conferences:'#6c3483',books:'#1a5276',awards:'#c0392b',activities:'#1a6b3a',workshops:'#935116'};
@@ -1021,7 +1321,7 @@ function buildDashboard(){
   });
   document.getElementById('dashboard-stats').innerHTML=html;
 }
-
+ 
 // ---- TOAST ----
 function showToast(msg,type){
   var t=document.getElementById('toast');
@@ -1031,12 +1331,12 @@ function showToast(msg,type){
   setTimeout(function(){t.classList.add('show');},10);
   setTimeout(function(){t.classList.remove('show');},3500);
 }
-
+ 
 // ---- HTML ESCAPE ----
 function escHtml(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-
+ 
 // ---- ENTER KEY ON LOGIN ----
 document.getElementById('login-user').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-pass').focus();});
 </script>
