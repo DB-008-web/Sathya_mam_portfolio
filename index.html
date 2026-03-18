@@ -291,7 +291,7 @@ section[id]{scroll-margin-top:130px}
   <div class="hero-layout">
     <div class="hero-left">
       <div class="hero-eyebrow f1"><span class="eyebrow-line"></span><span>Academic Portfolio</span></div>
-      <h1 class="hero-name f2"><em>Dr. M. Sathya</em><strong>(She/Her)</strong></h1>
+      <h1 class="hero-name f2"><em>Dr. M. Sathya SathishKumar</em><strong>(She/Her)</strong></h1>
       <div class="hero-role-wrapper f3"><span class="role-prefix">Currently —</span><span id="typewriter" class="role-text"></span><span class="cursor">|</span></div>
       <p class="hero-spec f3">Networking &nbsp;·&nbsp; MANET &nbsp;·&nbsp; IoT &nbsp;·&nbsp; AI &amp; ML &nbsp;·&nbsp; Cloud Computing</p>
       <div class="hero-cta f4">
@@ -827,7 +827,7 @@ window.addEventListener('scroll',function(){
 document.addEventListener('DOMContentLoaded',function(){
   /* Typewriter */
   var tw=document.getElementById('typewriter');
-  var roles=['Vice Principal','HOD – Information Technology','Researcher','Mentor & Educator'];
+  var roles=['Vice Principal','Associate Professor','Researcher','Mentor & Educator'];
   var ri=0,ci=0,del=false;
   function type(){if(!tw)return;var cur=roles[ri];tw.textContent=del?cur.substring(0,ci-1):cur.substring(0,ci+1);if(del)ci--;else ci++;var sp=del?45:90;if(!del&&ci===cur.length){sp=2200;del=true;}else if(del&&ci===0){del=false;ri=(ri+1)%roles.length;sp=400;}setTimeout(type,sp);}
   setTimeout(type,600);
