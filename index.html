@@ -291,7 +291,7 @@ section[id]{scroll-margin-top:130px}
   <div class="hero-layout">
     <div class="hero-left">
       <div class="hero-eyebrow f1"><span class="eyebrow-line"></span><span>Academic Portfolio</span></div>
-      <h1 class="hero-name f2"><em>Dr. M. Sathya Sathiskumar</em><strong>(She/Her)</strong></h1>
+      <h1 class="hero-name f2"><em>Dr. M. Sathya</em><strong>(She/Her)</strong></h1>
       <div class="hero-role-wrapper f3"><span class="role-prefix">Currently —</span><span id="typewriter" class="role-text"></span><span class="cursor">|</span></div>
       <p class="hero-spec f3">Networking &nbsp;·&nbsp; MANET &nbsp;·&nbsp; IoT &nbsp;·&nbsp; AI &amp; ML &nbsp;·&nbsp; Cloud Computing</p>
       <div class="hero-cta f4">
@@ -669,55 +669,70 @@ function secretClick(){
   if(_sc>=5){_sc=0;window.open('admin.html','_blank');}
   else{_st=setTimeout(function(){_sc=0;},1500);}
 }
-
+ 
 /* ===================================================
-   CONTACT FORM — saves message to localStorage
-   so it appears in the admin Messages inbox
+   JSONBIN CLOUD CONFIG
+   =================================================== */
+var BIN_ID  = '69bab577c3097a1dd537ea09';
+var API_KEY = '$2a$10$5uNxIwnU1IwDKd.AjJFh8egNjrU1465BgAUB/fr/AKNLYQaLu.upC';
+var BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+ 
+/* ===================================================
+   CONTACT FORM — saves message to cloud
    =================================================== */
 function handleSubmit(e){
   e.preventDefault();
   var name  = document.getElementById('c-name').value.trim();
   var email = document.getElementById('c-email').value.trim();
   var msg   = document.getElementById('c-msg').value.trim();
-
-  // Save to localStorage for admin inbox
-  try{
-    var msgs = JSON.parse(localStorage.getItem('mss_messages')||'[]');
-    msgs.push({
-      id:    Date.now(),
-      name:  name,
-      email: email,
-      msg:   msg,
-      time:  new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}),
-      read:  false
-    });
-    localStorage.setItem('mss_messages', JSON.stringify(msgs));
-  }catch(err){}
-
-  // UI feedback
-  var btn = document.getElementById('submit-btn');
-  btn.innerHTML = '<i class="fas fa-check"></i> &nbsp;Message Sent!';
-  btn.style.background = '#2D5A3F';
-  btn.disabled = true;
-  setTimeout(function(){
-    btn.innerHTML = 'Send Message &nbsp;<i class="fas fa-paper-plane"></i>';
-    btn.style.background = '';
-    btn.disabled = false;
-    e.target.reset();
-  }, 3000);
+  var btn   = document.getElementById('submit-btn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> &nbsp;Sending...';
+  btn.disabled=true;
+ 
+  fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var msgs=Array.isArray(data.messages)?data.messages:[];
+    msgs.push({id:Date.now(),name:name,email:email,msg:msg,
+      time:new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}),read:false});
+    data.messages=msgs;
+    return fetch(BIN_URL,{method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Versioning':'false'},
+      body:JSON.stringify(data)});
+  })
+  .then(function(){done();})
+  .catch(function(){
+    // fallback: save locally
+    try{var ms=JSON.parse(localStorage.getItem('mss_messages')||'[]');
+      ms.push({id:Date.now(),name:name,email:email,msg:msg,
+        time:new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}),read:false});
+      localStorage.setItem('mss_messages',JSON.stringify(ms));}catch(err){}
+    done();
+  });
+ 
+  function done(){
+    btn.innerHTML='<i class="fas fa-check"></i> &nbsp;Message Sent!';
+    btn.style.background='#2D5A3F';
+    setTimeout(function(){
+      btn.innerHTML='Send Message &nbsp;<i class="fas fa-paper-plane"></i>';
+      btn.style.background='';btn.disabled=false;e.target.reset();
+    },3000);
+  }
   return false;
 }
-
+ 
 /* ===================================================
-   DYNAMIC CONTENT LOADER — reads from admin localStorage
+   HELPERS
    =================================================== */
-(function(){
-  function loadDB(key){try{var v=localStorage.getItem('mss_'+key);return v?JSON.parse(v):[];}catch(e){return[];}}
-  function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-  function pad(n){return n<10?'0'+n:String(n);}
-
-  /* PATENTS — append at end with sequential number */
-  var nP=loadDB('patents');
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function pad(n){return n<10?'0'+n:String(n);}
+ 
+/* ===================================================
+   INJECT DATA into page sections
+   =================================================== */
+function injectData(data){
+  /* PATENTS — append at end with sequential numbers */
+  var nP=Array.isArray(data.patents)?data.patents:[];
   if(nP.length){
     var pg=document.getElementById('dyn-patents');
     if(pg){
@@ -733,9 +748,8 @@ function handleSubmit(e){
       if(sp)sp.setAttribute('data-target',tot);if(sn)sn.textContent=tot;
     }
   }
-
   /* PAPERS — prepend newest at top */
-  var nPap=loadDB('papers');
+  var nPap=Array.isArray(data.papers)?data.papers:[];
   if(nPap.length){
     var pl=document.getElementById('dyn-papers');
     if(pl){
@@ -749,56 +763,90 @@ function handleSubmit(e){
       if(pp)pp.setAttribute('data-target',pt);if(pn)pn.textContent=pt;
     }
   }
-
   /* CONFERENCES */
-  var nC=loadDB('conferences');
-  if(nC.length){var cl=document.getElementById('dyn-conferences');if(cl){nC.slice().reverse().forEach(function(c){var item=document.createElement('div');item.className='conf-item';item.innerHTML='<h3>'+esc(c.title)+'</h3><p>'+esc(c.details)+'</p>';cl.insertBefore(item,cl.firstChild);});}}
-
+  var nC=Array.isArray(data.conferences)?data.conferences:[];
+  if(nC.length){
+    var cl=document.getElementById('dyn-conferences');
+    if(cl){nC.slice().reverse().forEach(function(c){var item=document.createElement('div');item.className='conf-item';item.innerHTML='<h3>'+esc(c.title)+'</h3><p>'+esc(c.details)+'</p>';cl.insertBefore(item,cl.firstChild);});}
+  }
   /* BOOKS — append at end */
-  var nB=loadDB('books');
+  var nB=Array.isArray(data.books)?data.books:[];
   if(nB.length){
     var bg=document.getElementById('dyn-books');
     if(bg){
-      nB.forEach(function(b){var card=document.createElement('div');card.className='book-card';card.innerHTML='<div class="book-icon"><i class="fas fa-book-open"></i></div><div><h3>'+esc(b.title)+'</h3><p>'+esc(b.pub)+' · '+esc(b.date)+'</p>'+(b.isbn?'<span class="book-isbn">ISBN: '+esc(b.isbn)+'</span>':'')+'</div>';bg.appendChild(card);});
+      nB.forEach(function(b){
+        var card=document.createElement('div');card.className='book-card';
+        card.innerHTML='<div class="book-icon"><i class="fas fa-book-open"></i></div><div><h3>'+esc(b.title)+'</h3><p>'+esc(b.pub)+' · '+esc(b.date)+'</p>'+(b.isbn?'<span class="book-isbn">ISBN: '+esc(b.isbn)+'</span>':'')+'</div>';
+        bg.appendChild(card);
+      });
       var bt=bg.querySelectorAll('.book-card').length;
       var bp=document.getElementById('stat-pill-books'),bn=document.getElementById('stat-num-books');
       if(bp)bp.setAttribute('data-target',bt);if(bn)bn.textContent=bt;
     }
   }
-
   /* AWARDS */
-  var nA=loadDB('awards');
-  if(nA.length){var ar=document.getElementById('dyn-awards');if(ar){nA.forEach(function(a){var item=document.createElement('div');item.className='award-item';item.innerHTML='<div class="award-icon"><i class="fas fa-trophy"></i></div><div><h3>'+esc(a.title)+'</h3><p>'+esc(a.details)+'</p><span>'+esc(a.date)+'</span></div>';ar.appendChild(item);});}}
-
+  var nA=Array.isArray(data.awards)?data.awards:[];
+  if(nA.length){
+    var ar=document.getElementById('dyn-awards');
+    if(ar){nA.forEach(function(a){var item=document.createElement('div');item.className='award-item';item.innerHTML='<div class="award-icon"><i class="fas fa-trophy"></i></div><div><h3>'+esc(a.title)+'</h3><p>'+esc(a.details)+'</p><span>'+esc(a.date)+'</span></div>';ar.appendChild(item);});}
+  }
   /* ACTIVITIES */
-  var nAct=loadDB('activities');
-  if(nAct.length){var al=document.getElementById('dyn-activities');if(al){nAct.slice().reverse().forEach(function(a){var item=document.createElement('div');item.className='activity-item';item.innerHTML='<strong>'+esc(a.title)+'</strong> '+esc(a.details);al.insertBefore(item,al.firstChild);});}}
-
+  var nAct=Array.isArray(data.activities)?data.activities:[];
+  if(nAct.length){
+    var al=document.getElementById('dyn-activities');
+    if(al){nAct.slice().reverse().forEach(function(a){var item=document.createElement('div');item.className='activity-item';item.innerHTML='<strong>'+esc(a.title)+'</strong> '+esc(a.details);al.insertBefore(item,al.firstChild);});}
+  }
   /* WORKSHOPS */
-  var nW=loadDB('workshops');
-  if(nW.length){var wl=document.getElementById('dyn-workshops');if(wl){nW.slice().reverse().forEach(function(w){var item=document.createElement('div');item.className='workshop-item';item.innerHTML='<strong>'+esc(w.title)+'</strong> — '+esc(w.details);wl.insertBefore(item,wl.firstChild);});}}
-})();
-
+  var nW=Array.isArray(data.workshops)?data.workshops:[];
+  if(nW.length){
+    var wl=document.getElementById('dyn-workshops');
+    if(wl){nW.slice().reverse().forEach(function(w){var item=document.createElement('div');item.className='workshop-item';item.innerHTML='<strong>'+esc(w.title)+'</strong> — '+esc(w.details);wl.insertBefore(item,wl.firstChild);});}
+  }
+}
+ 
+/* Load from JSONBin cloud on every page load */
+fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}})
+  .then(function(r){return r.json();})
+  .then(function(data){injectData(data);})
+  .catch(function(){
+    // Cloud failed — fall back to localStorage
+    var fb={};
+    ['patents','papers','conferences','books','awards','activities','workshops'].forEach(function(k){
+      try{var v=localStorage.getItem('mss_'+k);fb[k]=v?JSON.parse(v):[];}catch(e){fb[k]=[];}
+    });
+    injectData(fb);
+  });
+ 
 /* ===================================================
-   MAIN SCRIPTS
+   MAIN SCRIPTS: navbar, typewriter, scroll, counters
    =================================================== */
-window.addEventListener('scroll',function(){var nb=document.getElementById('navbar');if(nb)nb.classList.toggle('scrolled',window.scrollY>60);});
+window.addEventListener('scroll',function(){
+  var nb=document.getElementById('navbar');
+  if(nb)nb.classList.toggle('scrolled',window.scrollY>60);
+});
 document.addEventListener('DOMContentLoaded',function(){
+  /* Typewriter */
   var tw=document.getElementById('typewriter');
-  var roles=['Vice Principal','Associate Professor','Researcher','Mentor & Educator'];
+  var roles=['Vice Principal','HOD – Information Technology','Researcher','Mentor & Educator'];
   var ri=0,ci=0,del=false;
   function type(){if(!tw)return;var cur=roles[ri];tw.textContent=del?cur.substring(0,ci-1):cur.substring(0,ci+1);if(del)ci--;else ci++;var sp=del?45:90;if(!del&&ci===cur.length){sp=2200;del=true;}else if(del&&ci===0){del=false;ri=(ri+1)%roles.length;sp=400;}setTimeout(type,sp);}
   setTimeout(type,600);
+  /* Mobile menu */
   var mb=document.getElementById('menu-btn'),nl=document.getElementById('nav-links');
   if(mb&&nl){mb.addEventListener('click',function(){nl.classList.toggle('open');mb.classList.toggle('open');});nl.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){nl.classList.remove('open');mb.classList.remove('open');});});}
+  /* Scroll reveal */
   var revs=document.querySelectorAll('.reveal');
   function checkReveal(){revs.forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight-40)el.classList.add('active');});}
   window.addEventListener('scroll',checkReveal);setTimeout(checkReveal,100);
+  /* Stat counters */
   document.querySelectorAll('.stat-counter').forEach(function(c){var t=parseInt(c.getAttribute('data-target'),10);var n=c.querySelector('.stat-number');if(!n)return;var v=0,step=t/(1800/16);function tick(){v+=step;if(v<t){n.textContent=Math.ceil(v);requestAnimationFrame(tick);}else{n.textContent=t;}}setTimeout(tick,800);});
+  /* Collapse: Experience */
   var be=document.getElementById('show-more-exp'),me=document.getElementById('more-exp');
   if(be&&me){be.addEventListener('click',function(){var o=me.style.display!=='none';me.style.display=o?'none':'block';be.classList.toggle('open',!o);be.querySelector('span').textContent=o?'View Earlier Experience':'View Less';});}
+  /* Collapse: Patents */
   var bpp=document.getElementById('show-more-patents'),mpp=document.getElementById('more-patents');
   if(bpp&&mpp){bpp.addEventListener('click',function(){var o=mpp.style.display!=='none';mpp.style.display=o?'none':'grid';bpp.classList.toggle('open',!o);bpp.querySelector('span').textContent=o?'View 4 More Patents':'View Less';});}
+  /* Hero parallax */
   var hn=document.querySelector('.hero-name');
   if(hn){document.addEventListener('mousemove',function(e){hn.style.transform='translate('+((e.clientX/window.innerWidth-.5)*6)+'px,'+((e.clientY/window.innerHeight-.5)*4)+'px)';});}
 });
